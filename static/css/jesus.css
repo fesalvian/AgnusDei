@@ -1,0 +1,30 @@
+main {
+    width: 100%; /* Ocupa 100% da largura da tela */
+    max-width: 100%; /* Garante que não ultrapasse a largura da tela */
+    margin: 0; /* Remove margens padrão */
+    padding: 20px; /* Mantém um espaçamento interno */
+    box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+}
+
+.section01 {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px ; /* Espaçamento apenas no topo e na base */
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.text-content {
+    flex: 1; /* Ocupa o espaço disponível */
+}
+
+.image-content {
+    max-width: 600px; /* Define o tamanho máximo da imagem */
+    width: 501px;
+    height: 626px;
+    /*height: auto;*/ /* Mantém a proporção da imagem */
+    border-radius: 10px; /* Borda arredondada opcional */
+}
