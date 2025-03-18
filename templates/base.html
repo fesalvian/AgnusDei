@@ -5,14 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Agnus Dei{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/mais-sobre.css">
+    <link rel="stylesheet" href="/static/css/home.css">
 
 </head>
 <body>
     <header>
         <nav>
             <ul>
+
+                <li>
+                    <a href="/home">
+                        <img src="{{ url_for('static', filename='img/imagemLogo.png') }}" alt="Logo do Site">
+                    </a>
+                </li>
+
                 <li><a href="/home">Pagina Principal</a></li>
-                <li><a href="/mais-sobre">Mais Sobre</a></li>
+                <li><a href="/personagens">Mais Sobre</a></li>
                 <li><a href="/oracoes">Orações</a></li>
                 <li><a href="/contato">Contato</a></li>
             </ul>
@@ -24,8 +33,10 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 Agnus Dei. Todos os direitos reservados.</p>
-        <p>Criado com amor a Deus por: Felipe Salviano</p>
+        <div class="footer-content">
+            <p>&copy; 2025 Agnus Dei. Todos os direitos reservados. Criado com amor a Deus por: Felipe Salviano</p>
+        </div>
     </footer>
+
 </body>
 </html>

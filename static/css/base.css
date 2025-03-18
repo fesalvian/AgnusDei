@@ -1,11 +1,14 @@
 /* Estilos gerais */
-body {
+html, body {
     font-family: 'Georgia', serif;
     background-color: #f4f1de;
     color: #3d405b;
     margin: 0;
     padding: 0;
     line-height: 1.6;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Cabeçalho */
@@ -27,6 +30,8 @@ header nav ul {
 
 header nav ul li {
     margin: 0 15px;
+    display: flex;
+    align-items: center;
 }
 
 header nav ul li a {
@@ -44,8 +49,16 @@ header nav ul li a:hover {
 /* Conteúdo principal */
 main {
     padding: 20px;
-    max-width: 800px;
+    width: 100%;
+    box-sizing: border-box;
     margin: 0 auto;
+    flex:1;
+}
+
+nav ul li a img {
+    box-shadow: none; /* Remove o sombreado */
+    width: auto;
+    height: 120px;
 }
 
 /* Rodapé */
@@ -56,6 +69,13 @@ footer {
     padding: 10px 0;
     margin-top: 20px;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+    display: flex; /* Ativa o Flexbox */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    gap: 20px; /* Espaçamento entre os textos */
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha em telas pequenas */
 }
 
 /* Títulos */

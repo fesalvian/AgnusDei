@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}{{ personagem.nome }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/detalhes.css') }}">
+
+<div class="detalhes-container">
+    <div class="texto">
+        <h1>{{ personagem.nome }}</h1>
+        <h2>{{ personagem.subtitulo }}</h2>
+        <p>{{ personagem.texto }}</p>
+    </div>
+    <div class="imagem">
+        <img src="{{ personagem.img }}" alt="{{ personagem.nome }}">
+    </div>
+</div>
+
+{% endblock %}

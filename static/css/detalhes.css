@@ -17,6 +17,10 @@ main {
     margin: 0;
 }
 
+.detalhes-container p{
+    font-size: large;
+}
+
 .texto {
     flex: 1; /* Ocupa o espaço disponível */
 }

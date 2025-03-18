@@ -3,6 +3,61 @@
 {% block title %}Contato{% endblock %}
 
 {% block content %}
-<h1>Contato</h1>
-<p>Este é o conteúdo da página inicial.</p>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contato.css') }}">
+
+<!-- Seção "Sobre Mim" -->
+<section class="about-me">
+    <h1>Sobre Mim</h1>
+    <p>
+        Olá! Meu nome é Felipe Salviano, tenho 23 anos e hoje no dia 13 de março de 2025 finalizei este site. Decidi desenvolvê-lo inspirado no site de São Carlo Acutis, com o objetivo de evangelhizar pessoas e espalhar a palavra de Deus, disseminando o conhecimento sobre a igreja católica. Acredito que através do conhecimento as pessoas podem se econtrar com Deus assim como eu.
+    </p>
+    <p>
+        Este projeto é muito especial para mim, pois espero poder ajuda pessoas a encontrarem o caminho da fé em Jesus. Espero que ele possa ser útil e inspirador para todos que o visitem. Este site não possui fins lucrativos nem é financiado por ninguem, eu o desenvolvi no tempo livre do trabalho e da faculdade, levou tempo mas ai esta.
+        Espero que todos possam ver a Jesus Cristo e entender o seu sacrificio por nós. Independe da sua dor, Deus pode curar você.
+    </p>
+    <p>Site desenvolvido com dedicaçao a nosso Senhor Jesus Cristo, com amor Felipe Salviano.</p>
+</section>
+
+<!-- Seção "Contatos" -->
+<section class="contact-info">
+    <h2>Meus Contatos</h2>
+    <div class="social-media">
+        <h3>Redes Sociais</h3>
+        <ul>
+            <li><a href="https://facebook.com/agnusdei" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+            <li><a href="https://instagram.com/agnusdei" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+            <li><i class="fas fa-envelope"></i> Email: felipesalviano00@hotmail.com</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Seção "Relatar Bug" -->
+<section class="report-bug">
+    <h2>Relatar um Bug</h2>
+    <p>
+        Encontrou um problema no site? Por favor, descreva o bug abaixo e clique em "Enviar". Sua mensagem será enviada diretamente para mim, e farei o possível para corrigir o problema o mais rápido possível.
+    </p>
+    <form id="bugReportForm">
+        <div class="form-group">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Descrição do Bug:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="screenshot">Anexar Captura de Tela (Opcional):</label>
+            <input type="file" id="screenshot" name="screenshot" accept="image/*">
+        </div>
+        <button type="submit">Enviar Relato</button>
+    </form>
+</section>
+
+<script src="{{ url_for('static', filename='js/contato.js') }}"></script>
+
 {% endblock %}

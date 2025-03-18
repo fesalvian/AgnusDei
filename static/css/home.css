@@ -1,0 +1,162 @@
+.hero {
+    position: relative;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    text-shadow: #333;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('../img/biblia.jpg') no-repeat center/cover; /* A imagem de fundo */
+    filter: blur(8px); /* Aplica o desfoque */
+
+    z-index: 0; /* Coloca o pseudo-elemento atrás do conteúdo */
+}
+
+.hero > * {
+    position: relative;
+    z-index: 1; /* Garante que o conteúdo fique acima da camada com o blur */
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #8b0000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.destaques {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    margin: 15px 15px 15px 15px;
+    border-radius: 20px;
+}
+
+.destaque-card {
+    text-align: center;
+    width: 30%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.destaque-card img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.destaque-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.destaque-card p {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.introducao {
+    display: flex;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.introducao-content {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.introducao img {
+    width: 40%;
+    border-radius: 10px;
+}
+
+.introducao p {
+    font-size: x-large;
+}
+
+.depoimentos {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f1f1f1;
+}
+
+.depoimentos blockquote {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #555;
+}
+
+#calendario-liturgico {
+    background-color: #fdf6e3; /* Tom pastel suave */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#calendario-liturgico h2 {
+    color: #7a1212;
+    font-size: 33px;
+    margin-bottom: 15px;
+
+}
+
+#calendario-liturgico h3 {
+font-size: 28px;
+}
+
+#calendario-liturgico p {
+    font-size: 24px;
+    color: #444;
+    line-height: 1.6;
+}
+
+.calendario-liturgico-card {
+    background: #fff;
+    padding: 20px;
+    margin-top: 15px;
+    border-left: 5px solid #7a1212;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.calendario-liturgico-card h4 {
+    color: #7a1212;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.calendario-liturgico-card p {
+    font-size: 16px;
+    color: #333;
+}

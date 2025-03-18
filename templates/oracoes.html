@@ -3,6 +3,43 @@
 {% block title %}Orações{% endblock %}
 
 {% block content %}
-<h1>Orações</h1>
-<p>Este é o conteúdo da página inicial.</p>
+
+<link rel="stylesheet" href="/static/css/oracao.css">
+
+ <!-- Lado Esquerdo - Lista de Tópicos -->
+ <div class="left-panel">
+    <h1>Orações</h1>
+    <h3 onclick="toggleTopic('oracoes-tradicionais')">Orações Tradicionais</h3>
+    <ul id="oracoes-tradicionais">
+        <!-- As orações serão carregadas dinamicamente aqui -->
+    </ul>
+
+    <h3 onclick="toggleTopic('oracoes-especificas')">Orações para Momentos Específicos</h3>
+    <ul id="oracoes-especificas" class="hidden">
+        <!-- As orações serão carregadas dinamicamente aqui -->
+    </ul>
+</div>
+
+<div class="middle-panel">
+    <div id="loading-animation-oracoes" class="dot-wave">
+        <div class="dot-wave__dot"></div>
+        <div class="dot-wave__dot"></div>
+        <div class="dot-wave__dot"></div>
+        <div class="dot-wave__dot"></div>
+    </div>
+    <h2 id="prayer-title"></h2>
+    <div id="prayer-content"></div>
+</div>
+
+<!-- Lado Direito - Área de Conteúdo -->
+<div class="right-panel">
+    <h1>Artigos</h1>
+    <h2 id="prayer-title"></h2>
+    <div id="prayer-content"></div>
+</div>
+
+
+
+  <script src="{{ url_for('static', filename='js/oracao.js') }}"></script>
+  
 {% endblock %}

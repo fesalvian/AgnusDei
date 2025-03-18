@@ -3,6 +3,60 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Bem-vindo ao meu site Home Page!</h1>
-<p>Este é o conteúdo da página inicial.</p>
+<section class="hero">
+    <div class="hero-content">
+        <h1>Bem-vindo ao Agnus Dei</h1>
+        <p>Encontre paz, orações e inspiração na fé católica.</p>
+        <a href="/personagens" class="btn">Explore Mais</a>
+    </div>
+</section>
+
+<section id="liturgia"></section>
+
+<section class="introducao">
+    <div class="introducao-content">
+        <h2>Sobre o Agnus Dei</h2>
+        <p>
+            O Agnus Dei é um espaço dedicado à fé católica, onde você pode encontrar orações,
+            histórias bíblicas e inspiração espiritual para fortalecer sua jornada de fé.
+        </p>
+    </div>
+    <img src="../static/img/eucaristia.jpg" alt="Introdução">
+</section>
+
+<section class="destaques">
+    <div class="destaque-card">
+        <img src="../static/img/jesusIcon.png" alt="Jesus">
+        <h3>Jesus Cristo</h3>
+        <p>Conheça mais sobre a vida e os ensinamentos de Jesus.</p>
+        <a href="/jesus" class="btn">Saiba Mais</a>
+    </div>
+    <div class="destaque-card">
+        <img src="../static/img/mariaIcon.png" alt="Maria">
+        <h3>Maria</h3>
+        <p>Descubra a devoção a Nossa Senhora.</p>
+        <a href="/maria" class="btn">Saiba Mais</a>
+    </div>
+    <div class="destaque-card">
+        <img src="../static/img/oracaoIcon.png" alt="Orações">
+        <h3>Orações</h3>
+        <p>Encontre orações para fortalecer sua fé.</p>
+        <a href="/oracoes" class="btn">Saiba Mais</a>
+    </div>
+</section>
+
+<section id="calendario-liturgico">
+    <!-- O conteúdo do calendário será carregado aqui -->
+</section>
+
+<section class="depoimentos">
+    <h2>Lembre se sempre</h2>
+    <blockquote>
+        "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito,
+        para que todo aquele que nele crê não pereça, mas tenha a vida eterna." - João 3:16
+    </blockquote>
+</section>
+
+<script src="{{ url_for('static', filename='js/calendario.js') }}"></script>
+
 {% endblock %}
