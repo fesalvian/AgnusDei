@@ -11,24 +11,21 @@
 </head>
 <body>
     <header>
-        <nav>
+        
+    </header>
+
+    <main>
+        <nav class="navegacao">
+            <a href="/home">
+                <img src="{{ url_for('static', filename='img/imagemLogo.png') }}" alt="Logo do Site">
+            </a>
             <ul>
-
-                <li>
-                    <a href="/home">
-                        <img src="{{ url_for('static', filename='img/imagemLogo.png') }}" alt="Logo do Site">
-                    </a>
-                </li>
-
                 <li><a href="/home">Pagina Principal</a></li>
                 <li><a href="/personagens">Mais Sobre</a></li>
                 <li><a href="/oracoes">Orações</a></li>
                 <li><a href="/contato">Contato</a></li>
             </ul>
         </nav>
-    </header>
-
-    <main>
         {% block content %}{% endblock %}
     </main>
 

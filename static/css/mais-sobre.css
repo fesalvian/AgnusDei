@@ -71,47 +71,94 @@ main {
 /* Animação do loading */
 /* Estilo da animação de carregamento */
 .dot-wave {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    height: 100px;
-}
-
-.dot-wave__dot {
-    width: 12px;
-    height: 12px;
-    background-color: #8b0000; /* Cor dos pontos */
+    width: 200px;
+    height: 60px;
+    position: absolute; /* Posicionamento absoluto */
+    top: 50%; /* Move para 50% do topo */
+    left: 50%; /* Move para 50% da esquerda */
+    transform: translate(-50%, -50%); /* Centraliza exatamente no meio */
+    z-index: 1;
+  }
+  
+  .circle {
+    width: 20px;
+    height: 20px;
+    position: absolute;
     border-radius: 50%;
-    animation: dot-wave-animation 0.5s infinite ease-in-out;
-}
-
-/* Atrasos para cada ponto */
-.dot-wave__dot:nth-child(1) {
-    animation-delay: 0s;
-}
-.dot-wave__dot:nth-child(2) {
-    animation-delay: 0.125s; /* Reduzido de 0.3s */
-}
-.dot-wave__dot:nth-child(3) {
-    animation-delay: 0.25s; /* Reduzido de 0.6s */
-}
-.dot-wave__dot:nth-child(4) {
-    animation-delay: 0.375s; /* Reduzido de 0.9s */
-}
-
-/* Animação dos pontos */
-@keyframes dot-wave-animation {
-    0%, 60%, 100% {
-        transform: translateY(0);
+    background-color: #8b0000;
+    left: 15%;
+    transform-origin: 50%;
+    animation: circle7124 .5s alternate infinite ease;
+  }
+  
+  @keyframes circle7124 {
+    0% {
+      top: 60px;
+      height: 5px;
+      border-radius: 50px 50px 25px 25px;
+      transform: scaleX(1.7);
     }
-    30% {
-        transform: translateY(-15px);
+  
+    40% {
+      height: 20px;
+      border-radius: 50%;
+      transform: scaleX(1);
     }
-}
-
-@media (max-width: 480px) {
-    .cards-grid {
-        grid-template-columns: 1fr; /* Uma coluna em telas muito pequenas */
+  
+    100% {
+      top: 0%;
     }
-}
+  }
+  
+  .circle:nth-child(2) {
+    left: 45%;
+    animation-delay: .2s;
+  }
+  
+  .circle:nth-child(3) {
+    left: auto;
+    right: 15%;
+    animation-delay: .3s;
+  }
+  
+  .shadow {
+    width: 20px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.9);
+    position: absolute;
+    top: 62px;
+    transform-origin: 50%;
+    z-index: -1;
+    left: 15%;
+    filter: blur(1px);
+    animation: shadow046 .5s alternate infinite ease;
+  }
+  
+  @keyframes shadow046 {
+    0% {
+      transform: scaleX(1.5);
+    }
+  
+    40% {
+      transform: scaleX(1);
+      opacity: .7;
+    }
+  
+    100% {
+      transform: scaleX(.2);
+      opacity: .4;
+    }
+  }
+  
+  .shadow:nth-child(4) {
+    left: 45%;
+    animation-delay: .2s
+  }
+  
+  .shadow:nth-child(5) {
+    left: auto;
+    right: 15%;
+    animation-delay: .3s;
+  }
+  

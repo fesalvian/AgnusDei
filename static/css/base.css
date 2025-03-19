@@ -1,51 +1,107 @@
-/* Estilos gerais */
 html, body {
     font-family: 'Georgia', serif;
     background-color: #f4f1de;
     color: #3d405b;
     margin: 0;
     padding: 0;
+    padding-top: 100px; /* Ajuste conforme a altura do header */
     line-height: 1.6;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
-
-/* Cabeçalho */
-header {
-    background-color: #8b0000; /* Vermelho escuro, simbolizando o sangue de Cristo */
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
+.navegacao {
+    background-color: #8b0000;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    animation: brilho 3s infinite ease-in-out;
 }
-
-header nav ul {
+.navegacao ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     justify-content: center;
-}
-
-header nav ul li {
-    margin: 0 15px;
-    display: flex;
     align-items: center;
+    max-height: 180px;
 }
-
-header nav ul li a {
-    color: #fff;
+.navegacao ul li {
+    margin: 0 15px;
+    position: relative;
+}
+.navegacao ul li a {
     text-decoration: none;
+    color: white;
     font-size: 18px;
+    padding: 10px 15px;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.navegacao li.active a {
+    color: #ffd700;
     font-weight: bold;
-    transition: color 0.3s ease;
 }
 
-header nav ul li a:hover {
-    color: #ffd700; /* Dourado, simbolizando a divindade */
+.navegacao li.active a::after {
+    transform: scaleX(1); /* Mantém a linha visível no item ativo */
 }
 
+.navegacao ul li a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 0;
+    height: 3px;
+    background: gold;
+    transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+.navegacao ul li a:hover::after {
+    width: 100%;
+    left: 0;
+}
+.navegacao ul li a:hover {
+    color: gold;
+    animation: brilhoDivino 0.8s infinite alternate;
+}
+
+nav a img {
+    height: 150px; /* Ajuste conforme necessário */
+    max-height: 150px;
+    box-shadow: none;
+    width: auto; /* Mantém a proporção */
+    display: block;
+    animation: none !important; 
+    pointer-events: none; /* Impede que o hover afete a imagem */
+}
+
+@keyframes brilhoDivino {
+    0% { text-shadow: 0 0 5px gold; }
+    50% { text-shadow: 0 0 15px gold; }
+    100% { text-shadow: 0 0 5px gold; }
+}
+
+/* Animação de brilho no fundo da navbar */
+@keyframes brilho {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+}
 /* Conteúdo principal */
 main {
     padding: 20px;
@@ -53,12 +109,6 @@ main {
     box-sizing: border-box;
     margin: 0 auto;
     flex:1;
-}
-
-nav ul li a img {
-    box-shadow: none; /* Remove o sombreado */
-    width: auto;
-    height: 120px;
 }
 
 /* Rodapé */
