@@ -3,6 +3,8 @@ from flask import Flask, render_template, jsonify
 from flask_cors import CORS
 from src.database import get_connection  # Importa de dentro da pasta src/
 from src.oracoes import oracoes_bp      # Importa o Blueprint de orações
+import requests
+import xml.etree.ElementTree as ET
 
 
 app = Flask(__name__)
@@ -59,6 +61,41 @@ def personagem(id):
             print(f"Erro ao buscar personagem: {e}")
             return "Erro ao buscar personagem", 500
     return "Erro de conexão com o banco de dados", 500
+
+#rota para buscar noticias
+RSS_URL = "https://news.google.com/rss/search?q=notícias+católicas&hl=pt-BR&gl=BR&ceid=BR:pt-419"
+
+@app.route('/api/noticias')
+def get_noticias():
+    try:
+        response = requests.get(RSS_URL, timeout=10)
+        response.raise_for_status()
+
+        root = ET.fromstring(response.content)
+        noticias = []
+
+        for item in root.findall(".//item")[:5]:  # Pegamos os 5 primeiros artigos
+            title = item.find("title").text if item.find("title") is not None else "Sem título"
+            description = item.find("description").text if item.find("description") is not None else "Sem descrição"
+            link = item.find("link").text if item.find("link") is not None else "#"
+
+            # Tentamos encontrar uma imagem dentro do conteúdo da notícia
+            media_content = item.find("{http://search.yahoo.com/mrss/}content" )
+            image_url = media_content.get("url") if media_content is not None else "https://via.placeholder.com/300x200"
+
+            noticias.append({
+                "title": title,
+                "description": description,
+                "link": link,
+                "image": image_url
+            })
+
+        return jsonify(noticias)
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Erro ao buscar notícias: {str(e)}"}), 500
+    except ET.ParseError as e:
+        return jsonify({"error": f"Erro ao processar XML: {str(e)}"}), 500
 
 # Rotas principais
 @app.route("/")
