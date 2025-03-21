@@ -4,51 +4,54 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
-from ..app import app
+import os
+from dotenv import load_dotenv
 
-@app.route('/enviar-bug', methods=['POST'])
-def enviar_bug():
-    nome = request.form.get('name')
-    email = request.form.get('email')
-    mensagem = request.form.get('message')
-    screenshot = request.files.get('screenshot')  # Captura o arquivo enviado
+load_dotenv()
 
-    # Configurações do e-mail
-    remetente = "seu-email@dominio.com"
-    senha = "sua-senha"
-    destinatario = "seu-email@dominio.com"  # E-mail para receber o relato
-    assunto = f"Relato de Bug - {nome}"
+EMAIL_HOST = "smtp.office365.com"  # Para Outlook/Hotmail
+EMAIL_PORT = 587
+EMAIL_USER = os.getenv("EMAIL_USER")
+EMAIL_PASS = os.getenv("EMAIL_PASS")
 
-    # Cria a mensagem
-    msg = MIMEMultipart()
-    msg['Subject'] = assunto
-    msg['From'] = remetente
-    msg['To'] = destinatario
-
-    # Corpo do e-mail
-    corpo = f"""
-    Nome: {nome}
-    E-mail: {email}
-    Mensagem:
-    {mensagem}
-    """
-    msg.attach(MIMEText(corpo, 'plain'))
-
-    # Anexa o screenshot, se enviado
-    if screenshot:
-        part = MIMEBase('application', 'octet-stream')
-        part.set_payload(screenshot.read())
-        encoders.encode_base64(part)
-        part.add_header('Content-Disposition', f'attachment; filename={screenshot.filename}')
-        msg.attach(part)
-
+def relatar_bug():
     try:
-        # Envia o e-mail
-        with smtplib.SMTP('smtp.dominio.com', 587) as server:  # Substitua pelo seu servidor SMTP
-            server.starttls()
-            server.login(remetente, senha)
-            server.sendmail(remetente, destinatario, msg.as_string())
-        return jsonify({"success": True})
+        name = request.form.get("name")
+        email = request.form.get("email")
+        message = request.form.get("message")
+        screenshot = request.files.get("screenshot")
+
+        if not name or not email or not message:
+            return jsonify({"error": "Todos os campos são obrigatórios"}), 400
+
+        # Criando e-mail
+        msg = MIMEMultipart()
+        msg["From"] = EMAIL_USER
+        msg["To"] = EMAIL_USER
+        msg["Subject"] = "Novo Bug Reportado no Site"
+
+        body = f"Nome: {name}\nE-mail: {email}\n\nDescrição do Bug:\n{message}"
+        msg.attach(MIMEText(body, "plain"))
+
+        # Se houver uma imagem anexada
+        if screenshot:
+            filename = screenshot.filename
+            attachment = MIMEBase("application", "octet-stream")
+            attachment.set_payload(screenshot.read())
+            encoders.encode_base64(attachment)
+            attachment.add_header("Content-Disposition", f"attachment; filename={filename}")
+            msg.attach(attachment)
+
+        # Enviar o e-mail
+        server = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
+        server.starttls()
+        server.login(EMAIL_USER, EMAIL_PASS)
+        server.sendmail(EMAIL_USER, EMAIL_USER, msg.as_string())
+        server.quit()
+
+        return jsonify({"message": "Bug reportado com sucesso!"})
+
     except Exception as e:
-        print(f"Erro ao enviar e-mail: {e}")
-        return jsonify({"success": False})
+        return jsonify({"error": f"Erro ao processar o pedido: {str(e)}"}), 500
+    
+print("Função relatar_bug definida.")

@@ -1,21 +1,23 @@
-document.getElementById('bugReportForm').addEventListener('submit', function (e) {
-    e.preventDefault();  // Evita o envio tradicional do formulário
+document.getElementById("bugReportForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-    const formData = new FormData(this);  // Captura todos os dados do formulário, incluindo o arquivo
+    let formData = new FormData(this);
 
-    fetch('/enviar-bug', {
-        method: 'POST',
-        body: formData  // Envia os dados como FormData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Relato de bug enviado com sucesso! Obrigado por ajudar a melhorar o site.');
+    try {
+        let response = await fetch("/api/relatar-bug", {
+            method: "POST",
+            body: formData
+        });
+
+        let result = await response.json();
+
+        if (response.ok) {
+            alert("Bug relatado com sucesso! Obrigado pelo seu feedback.");
+            this.reset();
         } else {
-            alert('Erro ao enviar o relato. Tente novamente.');
+            alert("Erro ao enviar o bug: " + result.error);
         }
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-    });
+    } catch (error) {
+        alert("Erro na conexão com o servidor.");
+    }
 });

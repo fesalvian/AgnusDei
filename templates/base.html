@@ -19,7 +19,8 @@
             <a href="/home">
                 <img src="{{ url_for('static', filename='img/imagemLogo.png') }}" alt="Logo do Site">
             </a>
-            <ul>
+            <button class="menu-toggle" aria-label="Abrir menu">&#9776;</button>
+            <ul class="menu">
                 <li><a href="/home">Pagina Principal</a></li>
                 <li><a href="/personagens">Mais Sobre</a></li>
                 <li><a href="/oracoes">Orações</a></li>
@@ -34,6 +35,6 @@
             <p>&copy; 2025 Agnus Dei. Todos os direitos reservados. Criado com amor a Deus por: Felipe Salviano</p>
         </div>
     </footer>
-
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
 </body>
 </html>

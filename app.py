@@ -5,6 +5,9 @@ from src.database import get_connection  # Importa de dentro da pasta src/
 from src.oracoes import oracoes_bp      # Importa o Blueprint de orações
 import requests
 import xml.etree.ElementTree as ET
+print("Importando src.contato...")
+from src.contato import relatar_bug
+print("Função relatar_bug importada com sucesso.")
 
 
 app = Flask(__name__)
@@ -117,10 +120,13 @@ def maria():
 @app.route("/oracoes")
 def oracoes():
     return render_template("oracoes.html")
-
 @app.route("/contato")
 def contato():
     return render_template("contato.html")
 
+# Registra a rota /api/relatar-bug
+app.add_url_rule('/api/relatar-bug', view_func=relatar_bug, methods=['POST'])
+
+            
 if __name__ == "__main__":
     app.run(debug=True)
