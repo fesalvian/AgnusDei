@@ -1,3 +1,4 @@
 document.querySelector('.menu-toggle').addEventListener('click', function() {
-    document.querySelector('.menu').classList.toggle('active');
+    const menu = document.querySelector('.navegacao ul');
+    menu.classList.toggle('active');
 });

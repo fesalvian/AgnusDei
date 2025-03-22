@@ -160,3 +160,38 @@ font-size: 28px;
     font-size: 16px;
     color: #333;
 }
+
+@media (max-width: 768px) {
+    .destaques {
+        padding: 10px; /* Reduzir o padding em telas menores */
+        gap: 10px; /* Reduzir o espaçamento entre os cartões */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .destaque-card {
+        width: auto; /* 1 cartão por linha em telas menores */
+        margin-bottom: 20px; /* Espaçamento entre os cartões */
+    }
+
+    .destaque-card h3 {
+        font-size: 20px; /* Reduzir o tamanho do título */
+    }
+
+    .destaque-card p {
+        font-size: 20px; /* Reduzir o tamanho do texto */
+    }
+
+    .destaque-card .btn {
+        padding: 12px 20px; /* Reduzir o tamanho do botão */
+        font-size: 18px;
+    }
+
+    .introducao{
+        display: flex;
+        flex-direction: column;
+    }
+    .introducao img{
+        width: 100%;
+    }
+}

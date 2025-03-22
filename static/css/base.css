@@ -10,6 +10,13 @@ html, body {
     display: flex;
     flex-direction: column;
 }
+main {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    flex:1;
+}
 .navegacao {
     background-color: #8b0000;
     display: flex;
@@ -102,14 +109,6 @@ nav a img {
         box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     }
 }
-/* Conteúdo principal */
-main {
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-    margin: 0 auto;
-    flex:1;
-}
 
 /* Rodapé */
 footer {
@@ -196,12 +195,22 @@ img {
     border-radius: 5px;
     font-weight: bold;
 }
-/*reponsividade*/
+/* Responsividade */
+
+@media (min-width:769px){
+    .menu-toggle{
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
     body {
-        padding-top: 60px; /* Reduzir o padding-top para telas menores */
+        padding-top: 120px; /* Reduzir o padding-top para telas menores */
     }
+
     .navegacao {
+        width: 100%;
+        box-sizing: border-box;
         flex-direction: column;
         padding: 10px;
     }
@@ -209,10 +218,20 @@ img {
     .navegacao ul {
         flex-direction: column;
         align-items: center;
+        display: none; /* Oculta o menu por padrão */
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .navegacao ul.active {
+        display: flex; /* Exibe o menu quando a classe active está presente */
     }
 
     .navegacao ul li {
         margin: 10px 0;
+        width: 100%;
+        text-align: center;
     }
 
     .navegacao ul li a {
@@ -223,86 +242,13 @@ img {
     nav a img {
         height: 100px; /* Reduzir o tamanho da imagem do logo */
     }
-}
-@media (max-width: 768px) {
-    main {
-        padding: 10px;
-    }
 
-    h1 {
-        font-size: 28px;
-    }
-
-    h2 {
-        font-size: 24px;
-    }
-
-    h3 {
-        font-size: 20px;
-    }
-}
-@media (max-width: 768px) {
-    footer {
-        padding: 10px;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-}
-@media (max-width: 768px) {
-    button {
-        padding: 8px 16px;
-        font-size: 14px;
-    }
-
-    a {
-        font-size: 14px;
-    }
-}
-@media (max-width: 768px) {
-    img {
-        margin: 10px auto;
-        border-radius: 5px;
-    }
-}
-@media (max-width: 768px) {
-    html, body {
-        font-size: 14px;
-    }
-
-    .navegacao {
-        padding: 5px 0;
-    }
-
-    .navegacao ul li a {
-        font-size: 14px;
-        padding: 5px 10px;
-    }
-}
-.menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-@media (max-width: 768px) {
     .menu-toggle {
-        display: block;
-    }
-
-    .menu {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .menu.active {
-        display: flex;
+        display: block; /* Exibe o botão de menu */
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
     }
 }

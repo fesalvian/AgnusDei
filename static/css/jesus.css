@@ -117,6 +117,16 @@ nav a:hover::after {
 
 /* Responsividade */
 @media (max-width: 768px) {
+
+    .navJesus ul{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .navJesus ul li a{
+        
+    }
+
     .artigos section {
         flex-direction: column;
         text-align: center;
