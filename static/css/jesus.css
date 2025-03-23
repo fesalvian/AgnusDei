@@ -1,4 +1,5 @@
 /* Estilos gerais da navbar */
+
 .navJesus {
     background-color: #8b0000; /* Cor de referência */
     padding: 20px 0;
@@ -123,13 +124,11 @@ nav a:hover::after {
         flex-direction: column;
     }
 
-    .navJesus ul li a{
-        
-    }
-
     .artigos section {
+        display: flex;
         flex-direction: column;
         text-align: center;
+        width: 100%;
     }
 
     .artigos section img {

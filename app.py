@@ -81,16 +81,12 @@ def get_noticias():
             title = item.find("title").text if item.find("title") is not None else "Sem título"
             description = item.find("description").text if item.find("description") is not None else "Sem descrição"
             link = item.find("link").text if item.find("link") is not None else "#"
-
-            # Tentamos encontrar uma imagem dentro do conteúdo da notícia
-            media_content = item.find("{http://search.yahoo.com/mrss/}content" )
-            image_url = media_content.get("url") if media_content is not None else "https://via.placeholder.com/300x200"
-
+            pubDate = item.find("pubDate").text if item.find("pubDate") is not None else "Data desconhecida"
             noticias.append({
                 "title": title,
                 "description": description,
                 "link": link,
-                "image": image_url
+                "pubDate": pubDate
             })
 
         return jsonify(noticias)

@@ -32,3 +32,15 @@ main {
     /*height: auto;*/ /* Mantém a proporção da imagem */
     border-radius: 10px; /* Borda arredondada opcional */
 }
+
+@media (max-width: 768px) {
+    .detalhes-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .detalhes-container .imagem{
+        width: 100%;
+        height: auto;
+    }
+}

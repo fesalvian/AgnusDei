@@ -9,10 +9,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         data.forEach(item => {
             htmlContent += `
                 <div class="noticia">
-                    <img src="${item.image}" alt="Imagem da notícia">
+                    
                     <div class="noticia-texto">
                         <h3>${item.title}</h3>
                         <p>${item.description}</p>
+                        <p>Data da postagem: ${item.pubDate}</p>
                         <a href="${item.link}" target="_blank">Leia mais</a>
                     </div>
                 </div>
