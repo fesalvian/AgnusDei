@@ -1,14 +1,14 @@
 
-# Agnus Dei
+# Agnus Dei ✝️
 
 Bem-vindo ao **Agnus Dei**, um site dedicado à fé católica, inspirado no trabalho de São Carlo Acutis. Este projeto foi desenvolvido com o objetivo de evangelizar e compartilhar conhecimentos sobre a Igreja Católica, incluindo a vida de Jesus, seus ensinamentos, milagres, orações, reflexões, santos e festas litúrgicas.
 
-## 🚀 Sobre o Projeto
+## Sobre o Projeto
 
 O **Agnus Dei** é um site desenvolvido por **Felipe Salviano** como um projeto pessoal para disseminar a palavra de Deus e ajudar as pessoas a se aproximarem da fé católica. O site não possui fins lucrativos e foi criado no tempo livre, com muito amor e dedicação.
 
 ### Objetivos:
-- Evangelizar e compartilhar a fé católica.
+- Evangelizar e compartilhar a fé católica. ✝️
 - Fornecer conteúdo inspirador e educativo sobre a vida de Jesus, seus ensinamentos e milagres.
 - Oferecer orações e reflexões para fortalecer a espiritualidade.
 - Conectar as pessoas aos santos e às festas litúrgicas.
@@ -141,7 +141,7 @@ Este projeto está sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE)
 
 ---
 
-Feito com ❤️ por [Felipe Salviano](https://github.com/fesalvian).
+Feito com ❤️ a Deus por [Felipe Salviano](https://github.com/fesalvian).
 
 
 
