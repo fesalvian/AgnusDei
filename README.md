@@ -142,7 +142,6 @@ Este projeto está sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE)
 ---
 
 Feito com ❤️ por [Felipe Salviano](https://github.com/fesalvian).
-```
 
 
 
