@@ -66,6 +66,7 @@ function loadPrayers() {
     const loadingAnimation = document.getElementById('loading-animation-oracoes');
     const tradicionaisList = document.getElementById('oracoes-tradicionais');
     const especificasList = document.getElementById('oracoes-especificas');
+    const novenasList = document.getElementById('oracoes-novenas');
 
     // Mostra a animação de carregamento
     loadingAnimation.style.display = "flex";
@@ -73,6 +74,7 @@ function loadPrayers() {
     // Limpa as listas antes de adicionar novos itens
     tradicionaisList.innerHTML = '';
     especificasList.innerHTML = '';
+    novenasList.innerHTML = '';
 
     fetch('/api/oracoes')
         .then(response => {
@@ -105,11 +107,23 @@ function loadPrayers() {
                 li.onclick = () => showPrayer(oracao.id);
                 especificasList.appendChild(li);
             });
+
+            // Filtra e adiciona as orações específicas (categoria_id = 3)
+            const novenas = data.filter(oracao => oracao.categoria_id === 3);
+            console.log("Orações Novenas filtradas:", novenas);  // Log das orações novenas
+            novenas.forEach(oracao => {
+                console.log("Adicionando oração novena:", oracao.titulo);  // Log de cada oração
+                const li = document.createElement('li');
+                li.textContent = oracao.titulo;
+                li.onclick = () => showPrayer(oracao.id);
+                novenasList.appendChild(li);
+            });
         })
         .catch(error => {
             console.error("Erro ao buscar orações:", error);
             tradicionaisList.innerHTML = "<p>Erro ao carregar as orações.</p>";
             especificasList.innerHTML = "<p>Erro ao carregar as orações.</p>";
+            novenasList.innerHTML = "<p>Erro ao carregar as orações.</p>";
         })
         .finally(() => {
             // Esconde a animação de carregamento, independentemente do resultado

@@ -116,6 +116,11 @@ def maria():
 @app.route("/oracoes")
 def oracoes():
     return render_template("oracoes.html")
+
+@app.route("/artigo")
+def artigo():
+    return render_template("artigo.html")
+
 @app.route("/contato")
 def contato():
     return render_template("contato.html")

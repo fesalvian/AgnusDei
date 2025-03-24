@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Artigos{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="../static/css/artigos.css">
+
+<main class="container">
+    <!-- Filtros de Categoria -->
+    <div class="filtros">
+        <button class="filtro-btn active" data-categoria="todos">Todos</button>
+        <button class="filtro-btn" data-categoria="reflexoes">Reflexões</button>
+        <button class="filtro-btn" data-categoria="estudos">Estudos Bíblicos</button>
+        <button class="filtro-btn" data-categoria="testemunhos">Testemunhos</button>
+    </div>
+
+    <!-- Área de Artigos (será populada dinamicamente) -->
+    <div class="artigos-container" id="artigos-container">
+        <!-- Exemplo de como um artigo será estruturado via JavaScript -->
+        <article class="artigo-card" data-categoria="reflexoes">
+            <div class="artigo-imagem">
+                <img src="../static/img/jesusBarco.jpg" alt="Jesus no barco">
+            </div>
+            <div class="artigo-corpo">
+                <span class="artigo-categoria">Reflexões</span>
+                <h2 class="artigo-titulo">Título do Artigo</h2>
+                <p class="artigo-resumo">Resumo breve do artigo que será mostrado na lista...</p>
+                <div class="artigo-metadados">
+                    <span class="artigo-data">10/03/2023</span>
+                    <span class="artigo-tempo-leitura">5 min de leitura</span>
+                </div>
+                <a href="artigo-completo.html?id=1" class="artigo-link">Ler mais</a>
+            </div>
+        </article>
+    </div>
+</main>
+{% endblock %}

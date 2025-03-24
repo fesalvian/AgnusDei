@@ -18,6 +18,11 @@
     <ul id="oracoes-especificas" class="hidden">
         <!-- As orações serão carregadas dinamicamente aqui -->
     </ul>
+
+    <h3 onclick="toggleTopic('oracoes-novenas')">Novenas</h3>
+    <ul id="oracoes-novenas" class="hidden">
+        <!-- As orações serão carregadas dinamicamente aqui -->
+    </ul>
 </div>
 
 <div class="middle-panel">
@@ -32,15 +37,6 @@
     <h2 id="prayer-title"></h2>
     <div id="prayer-content"></div>
 </div>
-
-<!-- Lado Direito - Área de Conteúdo -->
-<div class="right-panel">
-    <h1>Artigos</h1>
-    <h2 id="prayer-title"></h2>
-    <div id="prayer-content"></div>
-</div>
-
-
 
   <script src="{{ url_for('static', filename='js/oracao.js') }}"></script>
   
