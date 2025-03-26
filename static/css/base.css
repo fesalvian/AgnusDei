@@ -22,15 +22,29 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 10px 0;
+    padding: 15px 0; /* Reduzi o padding inicial */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: fixed;
     width: 100%;
+    height: 140px;
     top: 0;
     left: 0;
     z-index: 1000;
     animation: brilho 3s infinite ease-in-out;
+    transition: all 0.3s ease-in-out; /* Adiciona transição suave */
 }
+
+/* Adicione esta classe para o estado reduzido */
+.navegacao.reduzida {
+    padding: 5px 0; /* Padding reduzido */
+}
+
+.navegacao.reduzida a img {
+    height: 80px; /* Altura reduzida da logo */
+    max-height: 80px;
+    transition: all 0.3s ease-in-out;
+}
+
 .navegacao ul {
     list-style: none;
     padding: 0;
@@ -82,7 +96,7 @@ main {
 }
 
 nav a img {
-    height: 150px; /* Ajuste conforme necessário */
+    height: 110px; /* Ajuste conforme necessário */
     max-height: 150px;
     box-shadow: none;
     width: auto; /* Mantém a proporção */
@@ -213,6 +227,7 @@ img {
         box-sizing: border-box;
         flex-direction: column;
         padding: 10px;
+        padding-bottom: 10px;
     }
 
     .navegacao ul {
@@ -226,6 +241,7 @@ img {
 
     .navegacao ul.active {
         display: flex; /* Exibe o menu quando a classe active está presente */
+        margin-top: 20px;
     }
 
     .navegacao ul li {

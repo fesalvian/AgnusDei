@@ -9,6 +9,7 @@ function toggleTopic(topicId) {
     topic.classList.toggle('hidden');
 }
 
+
 // Função para mostrar/ocultar seções
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);
@@ -60,6 +61,8 @@ function showPrayer(prayerId) {
             loadingAnimation.style.display = "none";
         });
 }
+
+
 
 // Função para carregar as orações da API
 function loadPrayers() {
@@ -131,5 +134,25 @@ function loadPrayers() {
         });
 }
 
+
+
 // Carrega as orações quando a página é carregada
-document.addEventListener('DOMContentLoaded', loadPrayers);
+// Função para mostrar/ocultar o menu em dispositivos móveis
+function toggleMobileMenu() {
+    const leftPanel = document.querySelector('.left-panel');
+    leftPanel.classList.toggle('collapsed');
+}
+// Modifique o event listener existente para fechar o menu após seleção (mobile)
+document.addEventListener('DOMContentLoaded', function() {
+    loadPrayers();
+    
+    // Fecha o menu mobile quando um item é selecionado
+    document.querySelectorAll('.left-panel li').forEach(item => {
+        item.addEventListener('click', function() {
+            if (window.innerWidth <= 768 && e.target.closest('.left-panel li')) 
+            {
+                document.querySelector('.left-panel').classList.add('collapsed');
+            }
+        });
+    });
+});

@@ -5,6 +5,10 @@ main {
     display: flex;
   }
 
+  .mobile-menu-btn {
+    display: none;
+  }
+
   /* Lado Esquerdo - Lista de Tópicos */
   .left-panel {
     width: 250px;
@@ -185,4 +189,69 @@ main {
   left: auto;
   right: 15%;
   animation-delay: .3s;
+}
+
+/* Responsividade mobile*/
+@media (max-width: 768px) {
+  main {
+      flex-direction: column;
+  }
+
+
+  .middle-panel,
+  .right-panel {
+      width: auto;
+      margin: 10px 0;
+      border-right: none;
+  }
+  .left-panel {
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+  .left-panel {
+      order: 1; /* Muda a ordem para aparecer primeiro */
+  }
+
+  .middle-panel {
+      order: 2; /* Muda a ordem para aparecer depois */
+      font-size: large; /* Reduz o tamanho da fonte */
+      padding: 15px;
+  }
+
+  .right-panel {
+      order: 3;
+      display: none; /* Pode ser mostrado com um botão se necessário */
+  }
+
+  .left-panel h3 {
+      padding: 15px;
+      font-size: 1.2em;
+  }
+
+  .left-panel li {
+      padding: 12px 15px;
+  }
+
+  /* Ajuste para o conteúdo da oração */
+  #prayer-content {
+      font-size: 1em;
+      line-height: 1.6;
+  }
+
+  /* Menu mobile alternativo */
+  .mobile-menu-btn {
+    display: block;
+    padding: 15px;
+    background: #8b0000;
+    color: white;
+    text-align: center;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+  .left-panel.collapsed {
+      display: none;
+  }
 }
