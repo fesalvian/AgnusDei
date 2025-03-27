@@ -278,7 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <p>✝️ <strong>Impacto:</strong> A Ascensão não foi uma despedida, mas a inauguração de Seu governo cósmico (Ef 1:20-23).</p>`
 }
-        // Adicione os outros milagres aqui...
     };
 
     // Abre o modal ao clicar em um milagre

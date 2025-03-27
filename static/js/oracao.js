@@ -9,7 +9,6 @@ function toggleTopic(topicId) {
     topic.classList.toggle('hidden');
 }
 
-
 // Função para mostrar/ocultar seções
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);
@@ -28,14 +27,14 @@ function showPrayer(prayerId) {
     const prayerTitle = document.getElementById('prayer-title');
     const prayerContent = document.getElementById('prayer-content');
 
-    // Mostra a animação de carregamento antes de fazer a requisição
+    // Mostra a animação de carregamento
     loadingAnimation.style.display = "flex";
 
     // Limpa o conteúdo anterior
     prayerTitle.textContent = "";
-    prayerContent.textContent = "";
+    prayerContent.innerHTML = ""; // Usar innerHTML para limpeza também
 
-    fetch(`/api/oracoes/${prayerId}`)  // Busca a oração específica da API
+    fetch(`/api/oracoes/${prayerId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error("Erro na requisição: " + response.statusText);
@@ -45,19 +44,19 @@ function showPrayer(prayerId) {
         .then(data => {
             if (data.error) {
                 prayerTitle.textContent = "Erro";
-                prayerContent.textContent = data.error;
+                prayerContent.innerHTML = data.error; // Usar innerHTML para mensagens de erro também
             } else {
                 prayerTitle.textContent = data.titulo;
-                prayerContent.textContent = data.conteudo;
+                // 🔥 Substituição crucial aqui - formata o texto com parágrafos e <br>:
+                prayerContent.innerHTML = formatPrayerText(data.conteudo); 
             }
         })
         .catch(error => {
             console.error("Erro ao buscar oração:", error);
             prayerTitle.textContent = "Erro";
-            prayerContent.textContent = "Não foi possível carregar a oração.";
+            prayerContent.innerHTML = "Não foi possível carregar a oração.";
         })
         .finally(() => {
-            // Esconde a animação de carregamento, independentemente do resultado
             loadingAnimation.style.display = "none";
         });
 }
@@ -134,13 +133,40 @@ function loadPrayers() {
         });
 }
 
-
+function formatPrayerText(prayerText) {
+    // Divide o texto em parágrafos (assumindo que estão separados por quebras de linha no BD)
+    const paragraphs = prayerText.split('\n\n');
+    
+    let formattedHTML = '';
+    
+    paragraphs.forEach(para => {
+        if (para.toLowerCase().includes('amém')) {
+            formattedHTML += `<p class="amen">${para}</p>`;
+        } else {
+            // Substitui quebras de linha simples por <br>
+            const withLineBreaks = para.replace(/\n/g, '<br>');
+            formattedHTML += `<p>${withLineBreaks}</p>`;
+        }
+    });
+    
+    return formattedHTML;
+}
 
 // Carrega as orações quando a página é carregada
 // Função para mostrar/ocultar o menu em dispositivos móveis
 function toggleMobileMenu() {
     const leftPanel = document.querySelector('.left-panel');
     leftPanel.classList.toggle('collapsed');
+
+    // Ajuste para evitar sobreposição
+    const overlay = document.querySelector('.overlay');
+    if (leftPanel.classList.contains('active')) {
+        if (!overlay) {
+            createOverlay();
+        }
+    } else {
+        removeOverlay();
+    }
 }
 // Modifique o event listener existente para fechar o menu após seleção (mobile)
 document.addEventListener('DOMContentLoaded', function() {

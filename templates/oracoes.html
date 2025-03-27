@@ -3,43 +3,62 @@
 {% block title %}Orações{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="/static/css/oracoes.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/static/css/oracao.css">
-
-<div class="mobile-menu-btn" onclick="toggleMobileMenu()">☰ Menu de Orações</div>
-
- <!-- Lado Esquerdo - Lista de Tópicos -->
- <div class="left-panel">
-    <h1>Orações</h1>
-    <h3 onclick="toggleTopic('oracoes-tradicionais')">Orações Tradicionais</h3>
-    <ul id="oracoes-tradicionais">
-        <!-- As orações serão carregadas dinamicamente aqui -->
-    </ul>
-
-    <h3 onclick="toggleTopic('oracoes-especificas')">Orações para Momentos Específicos</h3>
-    <ul id="oracoes-especificas" class="hidden">
-        <!-- As orações serão carregadas dinamicamente aqui -->
-    </ul>
-
-    <h3 onclick="toggleTopic('oracoes-novenas')">Novenas</h3>
-    <ul id="oracoes-novenas" class="hidden">
-        <!-- As orações serão carregadas dinamicamente aqui -->
-    </ul>
-</div>
-
-<div class="middle-panel">
-    <div id="loading-animation-oracoes" class="dot-wave">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="shadow"></div>
-        <div class="shadow"></div>
-        <div class="shadow"></div>
+<div class="prayer-container">
+    <!-- Menu Mobile -->
+    <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <span>☰</span> Menu de Orações
+        <span class="mobile-menu-icon">▼</span>
     </div>
-    <h2 id="prayer-title"></h2>
-    <div id="prayer-content"></div>
+
+    <!-- Lado Esquerdo - Lista de Tópicos -->
+    <div class="left-panel">
+        <h1 class="panel-title">Orações</h1>
+        
+        <div class="prayer-category">
+            <div class="category-header" onclick="toggleTopic('oracoes-tradicionais')">
+                <span>Orações Tradicionais</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <ul id="oracoes-tradicionais" class="prayer-list">
+                <!-- As orações serão carregadas dinamicamente aqui -->
+            </ul>
+        </div>
+
+        <div class="prayer-category">
+            <div class="category-header" onclick="toggleTopic('oracoes-especificas')">
+                <span>Orações para Momentos Específicos</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <ul id="oracoes-especificas" class="prayer-list hidden">
+                <!-- As orações serão carregadas dinamicamente aqui -->
+            </ul>
+        </div>
+
+        <div class="prayer-category">
+            <div class="category-header" onclick="toggleTopic('oracoes-novenas')">
+                <span>Novenas</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <ul id="oracoes-novenas" class="prayer-list hidden">
+                <!-- As orações serão carregadas dinamicamente aqui -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Painel Central - Conteúdo da Oração -->
+    <div class="middle-panel">
+        <div id="loading-animation-oracoes" class="loading-animation">
+            <div class="spinner"></div>
+        </div>
+        <div id="prayer-container">
+            <h2 id="prayer-title"></h2>
+            <div id="prayer-content" class="prayer-text"></div>
+        </div>
+    </div>
 </div>
 
-  <script src="{{ url_for('static', filename='js/oracao.js') }}"></script>
-  
+<script src="{{ url_for('static', filename='js/oracoes.js') }}"></script>
 {% endblock %}
