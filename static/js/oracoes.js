@@ -1,175 +1,57 @@
-// Função para mostrar/ocultar tópicos com animação suave
+// ==============================================
+// FUNÇÕES GLOBAIS (para eventos onclick no HTML)
+// ==============================================
+
+// Versão robusta da função toggleTopic
 function toggleTopic(topicId) {
-    const topic = document.getElementById(topicId);
-    const header = document.querySelector(`[onclick="toggleTopic('${topicId}')]`);
+    console.log(`Tentando alternar: ${topicId}`); // Para debug
     
-    if (!topic || !header) {
-        console.error(`Elemento não encontrado para ID ${topicId}`);
+    // 1. Encontre a lista de orações
+    const topicList = document.getElementById(topicId);
+    if (!topicList) {
+        console.error(`Elemento com ID ${topicId} não encontrado no DOM`);
         return;
     }
-    
-    // Alterna a classe 'active' no cabeçalho
-    header.classList.toggle('active');
-    
-    // Alterna a classe 'show' na lista com animação
-    topic.classList.toggle('show');
-    
-    // Atualiza o ícone
-    const icon = header.querySelector('.toggle-icon');
-    if (icon) {
-        icon.style.transform = topic.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
-    }
-}
 
-// Função para mostrar uma oração
-function showPrayer(prayerId, element) {
-    const loadingAnimation = document.querySelector('.loading-animation');
-    const prayerTitle = document.getElementById('prayer-title');
-    const prayerContent = document.getElementById('prayer-content');
+    // 2. Encontre o header correspondente
+    let categoryHeader = null;
+    const headers = document.querySelectorAll('.category-header');
     
-    // Remove a classe 'active' de todos os itens e adiciona ao clicado
-    document.querySelectorAll('.prayer-list li').forEach(li => {
-        li.classList.remove('active');
-    });
-    
-    if (element) {
-        element.classList.add('active');
-    }
-    
-    // Mostra a animação de carregamento
-    loadingAnimation.style.display = "block";
-    
-    // Limpa o conteúdo anterior
-    prayerTitle.textContent = "";
-    prayerContent.innerHTML = "";
-    
-    fetch(`/api/oracoes/${prayerId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Erro na requisição: " + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.error) {
-                prayerTitle.textContent = "Erro";
-                prayerContent.innerHTML = `<p class="error">${data.error}</p>`;
-            } else {
-                prayerTitle.textContent = data.titulo;
-                prayerContent.innerHTML = formatPrayerText(data.conteudo);
-                
-                // Rolagem suave para o topo do conteúdo
-                window.scrollTo({
-                    top: document.querySelector('.middle-panel').offsetTop,
-                    behavior: 'smooth'
-                });
-            }
-        })
-        .catch(error => {
-            console.error("Erro ao buscar oração:", error);
-            prayerTitle.textContent = "Erro";
-            prayerContent.innerHTML = '<p class="error">Não foi possível carregar a oração.</p>';
-        })
-        .finally(() => {
-            loadingAnimation.style.display = "none";
-            
-            // Fecha o menu mobile se estiver em uma tela pequena
-            if (window.innerWidth <= 768) {
-                toggleMobileMenu();
-            }
-        });
-}
-
-// Função para formatar o texto da oração
-function formatPrayerText(prayerText) {
-    if (!prayerText) return '';
-    
-    const paragraphs = prayerText.split('\n\n');
-    let formattedHTML = '';
-    
-    paragraphs.forEach(para => {
-        if (!para.trim()) return;
-        
-        if (para.toLowerCase().includes('amém') || para.toLowerCase().includes('amen')) {
-            formattedHTML += `<p class="amen">${para}</p>`;
-        } else {
-            const withLineBreaks = para.replace(/\n/g, '<br>');
-            formattedHTML += `<p>${withLineBreaks}</p>`;
+    headers.forEach(header => {
+        if (header.getAttribute('onclick')?.includes(topicId)) {
+            categoryHeader = header;
         }
     });
+
+    if (!categoryHeader) {
+        console.error(`Header para ${topicId} não encontrado`);
+        return;
+    }
+
+    // 3. Execute a lógica de toggle
+    topicList.classList.toggle('expanded');
     
-    return formattedHTML;
+    // 4. Atualize o ícone
+    const icon = categoryHeader.querySelector('.toggle-icon');
+    if (icon) {
+        icon.style.transform = topicList.classList.contains('expanded') 
+            ? 'rotate(180deg)' 
+            : 'rotate(0)';
+    }
 }
 
-// Função para carregar as orações da API
-function loadPrayers() {
-    const loadingAnimation = document.querySelector('.loading-animation');
-    const tradicionaisList = document.getElementById('oracoes-tradicionais');
-    const especificasList = document.getElementById('oracoes-especificas');
-    const novenasList = document.getElementById('oracoes-novenas');
-    
-    // Mostra a animação de carregamento
-    loadingAnimation.style.display = "block";
-    
-    fetch('/api/oracoes')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Erro na requisição: " + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Limpa as listas antes de adicionar novos itens
-            tradicionaisList.innerHTML = '';
-            especificasList.innerHTML = '';
-            novenasList.innerHTML = '';
-            
-            // Adiciona as orações tradicionais (categoria_id = 1)
-            const tradicionais = data.filter(oracao => oracao.categoria_id === 1);
-            tradicionais.forEach(oracao => {
-                const li = document.createElement('li');
-                li.textContent = oracao.titulo;
-                li.onclick = (e) => showPrayer(oracao.id, e.currentTarget);
-                tradicionaisList.appendChild(li);
-            });
-            
-            // Adiciona as orações específicas (categoria_id = 2)
-            const especificas = data.filter(oracao => oracao.categoria_id === 2);
-            especificas.forEach(oracao => {
-                const li = document.createElement('li');
-                li.textContent = oracao.titulo;
-                li.onclick = (e) => showPrayer(oracao.id, e.currentTarget);
-                especificasList.appendChild(li);
-            });
-            
-            // Adiciona as novenas (categoria_id = 3)
-            const novenas = data.filter(oracao => oracao.categoria_id === 3);
-            novenas.forEach(oracao => {
-                const li = document.createElement('li');
-                li.textContent = oracao.titulo;
-                li.onclick = (e) => showPrayer(oracao.id, e.currentTarget);
-                novenasList.appendChild(li);
-            });
-            
-            // Mostra a primeira categoria por padrão
-            if (tradicionais.length > 0) {
-                tradicionaisList.classList.add('show');
-                document.querySelector('[onclick="toggleTopic(\'oracoes-tradicionais\')"]').classList.add('active');
-            }
-        })
-        .catch(error => {
-            console.error("Erro ao buscar orações:", error);
-            const errorMsg = '<li class="error">Erro ao carregar as orações</li>';
-            tradicionaisList.innerHTML = errorMsg;
-            especificasList.innerHTML = errorMsg;
-            novenasList.innerHTML = errorMsg;
-        })
-        .finally(() => {
-            loadingAnimation.style.display = "none";
-        });
+// Função para debug - verifique no console do navegador
+function debugElements() {
+    console.log('Elementos encontrados:', {
+        tradicionais: document.getElementById('oracoes-tradicionais'),
+        especificas: document.getElementById('oracoes-especificas'),
+        novenas: document.getElementById('oracoes-novenas'),
+        headers: document.querySelectorAll('.category-header')
+    });
 }
 
-// Função para mostrar/ocultar o menu mobile
+// Chame esta função no console para verificar os elementos
+// debugElements();
 function toggleMobileMenu() {
     const leftPanel = document.querySelector('.left-panel');
     const menuBtn = document.querySelector('.mobile-menu-btn');
@@ -180,37 +62,165 @@ function toggleMobileMenu() {
     
     if (leftPanel.classList.contains('active')) {
         overlay.classList.add('active');
-        overlay.onclick = toggleMobileMenu; // Fecha o menu ao clicar no overlay
+        overlay.onclick = toggleMobileMenu;
     } else {
         overlay.classList.remove('active');
     }
 }
 
-// Cria o overlay dinamicamente
-function createOverlay() {
+// ==============================================
+// MÓDULO PRINCIPAL (executado quando DOM estiver pronto)
+// ==============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializa componentes
+    initOverlay();
+    loadPrayers();
+    setupEventListeners();
+    
+    // Fecha menu quando redimensionar para desktop
+    window.addEventListener('resize', handleWindowResize);
+});
+
+// ==============================================
+// FUNÇÕES DE APOIO (escopo do módulo)
+// ==============================================
+
+function initOverlay() {
     const overlay = document.createElement('div');
     overlay.className = 'overlay';
     document.body.appendChild(overlay);
 }
 
-// Inicialização quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', function() {
-    // Cria o overlay para mobile
-    createOverlay();
+function handleWindowResize() {
+    if (window.innerWidth > 768) {
+        const leftPanel = document.querySelector('.left-panel');
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const overlay = document.querySelector('.overlay');
+        
+        leftPanel.classList.remove('active');
+        menuBtn.classList.remove('active');
+        overlay.classList.remove('active');
+    }
+}
+
+function setupEventListeners() {
+    // Pode adicionar event listeners aqui se migrar de onclick
+    // document.querySelector('.mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+}
+
+// ==============================================
+// FUNÇÕES DE CARREGAMENTO DE DADOS
+// ==============================================
+
+async function loadPrayers() {
+    const loadingAnimation = document.querySelector('.loading-animation');
+    const lists = {
+        tradicionais: document.getElementById('oracoes-tradicionais'),
+        especificas: document.getElementById('oracoes-especificas'),
+        novenas: document.getElementById('oracoes-novenas')
+    };
     
-    // Carrega as orações
-    loadPrayers();
-    
-    // Fecha o menu ao redimensionar para desktop
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            const leftPanel = document.querySelector('.left-panel');
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            const overlay = document.querySelector('.overlay');
-            
-            leftPanel.classList.remove('active');
-            menuBtn.classList.remove('active');
-            overlay.classList.remove('active');
+    try {
+        loadingAnimation.style.display = "block";
+        const response = await fetch('/api/oracoes');
+        
+        if (!response.ok) throw new Error("Erro na requisição");
+        
+        const data = await response.json();
+        
+        // Limpa e preenche as listas
+        Object.values(lists).forEach(list => list.innerHTML = '');
+        fillPrayerList(lists.tradicionais, data.filter(o => o.categoria_id === 1));
+        fillPrayerList(lists.especificas, data.filter(o => o.categoria_id === 2));
+        fillPrayerList(lists.novenas, data.filter(o => o.categoria_id === 3));
+        
+        // Abre a primeira categoria por padrão
+        if (lists.tradicionais.children.length > 0) {
+            lists.tradicionais.classList.add('expanded');
+            document.querySelector('[onclick="toggleTopic(\'oracoes-tradicionais\')"]')
+                .classList.add('active');
         }
+    } catch (error) {
+        console.error("Erro ao buscar orações:", error);
+        showErrorInLists(lists);
+    } finally {
+        loadingAnimation.style.display = "none";
+    }
+}
+
+function fillPrayerList(listElement, prayers) {
+    prayers.forEach(prayer => {
+        const li = document.createElement('li');
+        li.textContent = prayer.titulo;
+        li.onclick = (e) => {
+            e.stopPropagation();
+            showPrayer(prayer.id, e.currentTarget);
+        };
+        listElement.appendChild(li);
     });
-});
+}
+
+function showErrorInLists(lists) {
+    const errorMsg = '<li class="error">Erro ao carregar as orações</li>';
+    Object.values(lists).forEach(list => list.innerHTML = errorMsg);
+}
+
+// ==============================================
+// FUNÇÕES DE EXIBIÇÃO DE ORAÇÕES
+// ==============================================
+
+async function showPrayer(prayerId, element) {
+    const loadingAnimation = document.querySelector('.loading-animation');
+    const prayerTitle = document.getElementById('prayer-title');
+    const prayerContent = document.getElementById('prayer-content');
+    
+    try {
+        // Reset e preparação
+        document.querySelectorAll('.prayer-list li').forEach(li => li.classList.remove('active'));
+        if (element) element.classList.add('active');
+        
+        loadingAnimation.style.display = "block";
+        prayerTitle.textContent = "";
+        prayerContent.innerHTML = "";
+        
+        // Carrega a oração
+        const response = await fetch(`/api/oracoes/${prayerId}`);
+        if (!response.ok) throw new Error("Erro na requisição");
+        
+        const data = await response.json();
+        
+        if (data.error) throw new Error(data.error);
+        
+        // Exibe a oração
+        prayerTitle.textContent = data.titulo;
+        prayerContent.innerHTML = formatPrayerText(data.conteudo);
+        
+        // Rolagem suave
+        window.scrollTo({
+            top: document.querySelector('.middle-panel').offsetTop,
+            behavior: 'smooth'
+        });
+        
+    } catch (error) {
+        console.error("Erro ao buscar oração:", error);
+        prayerTitle.textContent = "Erro";
+        prayerContent.innerHTML = `<p class="error">${error.message || 'Não foi possível carregar a oração.'}</p>`;
+    } finally {
+        loadingAnimation.style.display = "none";
+        if (window.innerWidth <= 768) toggleMobileMenu();
+    }
+}
+
+function formatPrayerText(prayerText) {
+    if (!prayerText) return '';
+    
+    return prayerText.split('\n\n')
+        .filter(para => para.trim())
+        .map(para => {
+            const isAmen = para.toLowerCase().includes('amém') || para.toLowerCase().includes('amen');
+            const content = para.replace(/\n/g, '<br>');
+            return `<p ${isAmen ? 'class="amen"' : ''}>${content}</p>`;
+        })
+        .join('');
+}
