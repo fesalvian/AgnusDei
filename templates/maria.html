@@ -1,61 +1,230 @@
 {% extends "base.html" %}
 
-{% block title %}Maria{% endblock %}
+{% block title %}Maria, Mãe de Jesus{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/static/css/jesus.css">
 
-<h1>content</h1>
+<!-- Internal navigation menu -->
+<nav class="menu-interno">
+    <ul>
+        <li><a href="#vida-de-maria">Vida de Maria</a></li>
+        <li><a href="#anunciacao">Anunciação</a></li>
+        <li><a href="#papel-na-redencao">Papel na Redenção</a></li>
+        <li><a href="#aparencias">Aparições</a></li>
+        <li><a href="#dogmas">Dogmas Marianos</a></li>
+        <li><a href="#devoção">Devoção Mariana</a></li>
+    </ul>
+</nav>
 
-<div style="
-    font-family: 'Georgia', serif;
-    font-size: 18px;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-">
-    <h2 style="
-        color: #5a3e36;
-        margin-bottom: 15px;
-        font-size: 24px;
-    ">Pai Nosso</h2>
-    
-    <p style="
-        margin-bottom: 10px;
-        font-style: italic;
-    ">
-        Pai nosso que estais nos céus, santificado seja o Vosso nome;<br>
-        venha a nós o Vosso reino;<br>
-        seja feita a Vossa vontade, assim na terra como no céu.
-    </p>
-    
-    <p style="
-        margin-bottom: 10px;
-        font-style: italic;
-    ">
-        O pão nosso de cada dia nos dai hoje;<br>
-        perdoai-nos as nossas ofensas,<br>
-        assim como nós perdoamos a quem nos tem ofendido;
-    </p>
-    
-    <p style="
-        margin-bottom: 15px;
-        font-style: italic;
-    ">
-        E não nos deixeis cair em tentação,<br>
-        mas livrai-nos do mal.
-    </p>
-    
-    <p style="
-        font-weight: bold;
-        color: #5a3e36;
-        font-size: 20px;
-    ">Amém.</p>
-</div>
+<main class="conteudo-jesus">
+    <!-- Back to Top Button -->
+    <button id="btnTopo" title="Voltar ao topo">↑</button>
 
+    <!-- Section Vida de Maria -->
+    <section id="vida-de-maria" class="secao">
+        <h2>A Vida de Maria, Mãe de Jesus</h2>
+        <img src="../static/img/maryAndJesus.jpg" alt="Maria, Mãe de Jesus" class="img-destaque">
+        <div class="conteudo-texto">
+            <p>Maria de Nazaré, conhecida como a Virgem Maria ou Santa Maria, é uma das figuras mais reverenciadas do Cristianismo. Como mãe de Jesus Cristo, ela ocupa um lugar único na história da salvação e na devoção cristã.</p>
+            
+            <h3>Origens e Juventude</h3>
+            <p>Maria nasceu em Nazaré, na Galileia, por volta do ano 20 a.C. Segundo a tradição, seus pais eram Joaquim e Ana, um casal piedoso que a educou na fé judaica. Aos 14 anos, Maria estava noiva de José, um carpinteiro da linhagem do rei Davi, quando recebeu a visita do anjo Gabriel.</p>
+            
+            <h3>Família</h3>
+            <p>Maria e José tiveram Jesus como primogênito. Os Evangelhos mencionam que Maria teve outros filhos (Marcos 6:3), mas a tradição católica entende que eram parentes próximos ou filhos de José de um casamento anterior.</p>
+            
+            <h3>Ministério de Jesus</h3>
+            <p>Maria acompanhou Jesus durante seu ministério público, estando presente em momentos importantes como as bodas de Caná (João 2:1-12) e ao pé da cruz (João 19:25-27). Jesus, ao vê-la com o discípulo amado, disse: "Mulher, eis aí teu filho", e ao discípulo: "Eis aí tua mãe".</p>
+            
+            <h3>Últimos Anos</h3>
+            <p>Após a ascensão de Jesus, Maria permaneceu com os apóstolos em Jerusalém, participando da comunidade cristã primitiva (Atos 1:14). Segundo a tradição, ela viveu seus últimos anos em Éfeso, na companhia de João, o apóstolo.</p>
+            
+            <blockquote>
+                <p>"Desde agora todas as gerações me chamarão bem-aventurada, porque o Poderoso fez grandes coisas em meu favor." (Lucas 1:48-49)</p>
+            </blockquote>
+        </div>
+        <div class="leia-mais">Leia mais</div>
+    </section>
+
+    <!-- Section Anunciação -->
+    <section id="anunciacao" class="secao">
+        <h2>A Anunciação do Anjo Gabriel</h2>
+        <img src="../static/img/mariaTriste.jpg" alt="Anunciação a Maria" class="img-destaque">
+        <div class="conteudo-texto">
+            <h3>O Evento que Mudou a História</h3>
+            <p>A Anunciação é um dos momentos mais importantes da história cristã, quando o anjo Gabriel anunciou a Maria que ela seria a mãe do Messias.</p>
+            
+            <h3>O Diálogo com o Anjo</h3>
+            <p>Segundo Lucas 1:26-38, o anjo saudou Maria dizendo: "Ave, cheia de graça, o Senhor é contigo". Maria ficou perturbada com esta saudação, mas o anjo a tranquilizou:</p>
+            
+            <blockquote>
+                <p>"Não temas, Maria, pois encontraste graça diante de Deus. Eis que conceberás e darás à luz um filho, e lhe porás o nome de Jesus. Ele será grande e será chamado Filho do Altíssimo."</p>
+            </blockquote>
+            
+            <h3>A Resposta de Maria</h3>
+            <p>Maria perguntou como seria possível, já que não conhecia homem. O anjo explicou que seria por obra do Espírito Santo, e que sua parenta Isabel, embora idosa, também concebera um filho (João Batista).</p>
+            
+            <p>A resposta de Maria é um modelo de fé e entrega:</p>
+            <blockquote>
+                <p>"Eis aqui a serva do Senhor. Faça-se em mim segundo a tua palavra." (Lucas 1:38)</p>
+            </blockquote>
+            
+            <h3>Significado Teológico</h3>
+            <p>A Anunciação representa:</p>
+            <ul>
+                <li>O momento da Encarnação do Verbo</li>
+                <li>O "sim" de Maria que possibilitou a redenção</li>
+                <li>O modelo de resposta humana à vontade divina</li>
+            </ul>
+        </div>
+        <div class="leia-mais">Leia mais</div>
+    </section>
+
+    <!-- Section Papel na Redenção -->
+    <section id="papel-na-redencao" class="secao">
+        <h2>O Papel de Maria na Redenção</h2>
+        <img src="../static/img/mariaSinfonia.jpg" alt="Maria na redenção" class="img-destaque">
+        <div class="conteudo-texto">
+            <h3>Nova Eva</h3>
+            <p>Os Padres da Igreja viram em Maria a "Nova Eva". Enquanto Eva desobedeceu levando o pecado ao mundo, Maria obedeceu, tornando-se instrumento da salvação.</p>
+            
+            <h3>Co-Redentora?</h3>
+            <p>Embora apenas Jesus seja o Redentor, Maria participou de forma única no plano salvífico:</p>
+            <ul>
+                <li>Seu "sim" possibilitou a Encarnação</li>
+                <li>Sofreu com Jesus na cruz (Lumen Gentium 58)</li>
+                <li>Intercede continuamente pela humanidade</li>
+            </ul>
+            
+            <h3>Medianeira de Todas as Graças</h3>
+            <p>A tradição católica vê Maria como canal de todas as graças, pois trouxe ao mundo a fonte da graça - Jesus Cristo.</p>
+            
+            <blockquote>
+                <p>"Todas as gerações me chamarão bem-aventurada, porque o Poderoso fez grandes coisas em meu favor." (Lucas 1:48-49)</p>
+            </blockquote>
+        </div>
+        <div class="leia-mais">Leia mais</div>
+    </section>
+
+    <!-- Section Aparições -->
+    <section id="aparencias" class="secao">
+        <h2>Aparições Marianas</h2>
+        <img src="../static/img/mariaMaedeDeus.jpg" alt="Aparições de Maria" class="img-destaque">
+        <div class="conteudo-texto">
+            <p>Maria teria aparecido em diversos lugares ao longo da história, trazendo mensagens de conversão, oração e paz. Algumas das aparições mais conhecidas:</p>
+            
+            <div class="milagres-grid">
+                <div class="milagre" data-id="guadalupe">
+                    <h3>Nossa Senhora de Guadalupe</h3>
+                    <p>México, 1531 - Deixou sua imagem gravada no manto de Juan Diego</p>
+                </div>
+                
+                <div class="milagre" data-id="lourdes">
+                    <h3>Nossa Senhora de Lourdes</h3>
+                    <p>França, 1858 - Apareceu a Bernadette Soubirous, identificando-se como "Imaculada Conceição"</p>
+                </div>
+                
+                <div class="milagre" data-id="fatima">
+                    <h3>Nossa Senhora de Fátima</h3>
+                    <p>Portugal, 1917 - Apareceu a três pastorinhos, com mensagens sobre conversão e paz</p>
+                </div>
+
+                <div class="milagre" data-id="aparecida">
+                    <h3>Nossa Senhora Aparecida</h3>
+                    <p>Brasil, 1717 - Padroeira do Brasil, encontrada por pescadores no rio Paraíba</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Modal for apparitions -->
+    <div id="modal-milagre" class="modal">
+        <div class="modal-conteudo">
+            <span class="fechar-modal">&times;</span>
+            <h2 id="modal-titulo"></h2>
+            <div id="modal-texto"></div>
+        </div>
+    </div>
+
+    <!-- Section Dogmas Marianos -->
+    <section id="dogmas" class="secao">
+        <h2>Os Dogmas Marianos</h2>
+        <img src="../static/img/mariaCoracao.jpg" alt="Dogmas Marianos" class="img-destaque">
+        <div class="conteudo-texto">
+            <h3>Verdades de Fé sobre Maria</h3>
+            <p>A Igreja Católica definiu quatro dogmas sobre Maria, verdades fundamentais da fé cristã:</p>
+            
+            <div class="destaque-secao">
+                <h3>1. Maternidade Divina (Theotókos)</h3>
+                <p>Definido no Concílio de Éfeso (431): Maria é verdadeiramente Mãe de Deus, pois Jesus é verdadeiro Deus e verdadeiro homem.</p>
+            </div>
+            
+            <div class="destaque-secao">
+                <h3>2. Virgindade Perpétua</h3>
+                <p>Maria foi virgem antes, durante e depois do parto, permanecendo sempre consagrada a Deus.</p>
+            </div>
+            
+            <div class="destaque-secao">
+                <h3>3. Imaculada Conceição</h3>
+                <p>Definido por Pio IX em 1854: Maria foi preservada do pecado original desde sua concepção, por méritos de Cristo.</p>
+            </div>
+            
+            <div class="destaque-secao">
+                <h3>4. Assunção</h3>
+                <p>Definido por Pio XII em 1950: Maria foi elevada ao céu em corpo e alma ao final de sua vida terrena.</p>
+            </div>
+        </div>
+        <div class="leia-mais">Saiba Mais</div>
+    </section>
+
+    <!-- Section Devoção Mariana -->
+    <section id="devoção" class="secao">
+        <h2>A Devoção a Maria</h2>
+        <img src="../static/img/mariaTrindade.jpg" alt="Devoção Mariana" class="img-destaque">
+        <div class="conteudo-texto">
+            <h3>Formas de Devoção</h3>
+            <p>A piedade mariana se expressa de diversas formas na vida da Igreja:</p>
+            
+            <div class="destaque-secao">
+                <h3>Orações Marianas</h3>
+                <ul>
+                    <li>Ave Maria</li>
+                    <li>Rosário</li>
+                    <li>Magnificat</li>
+                    <li>Salve Rainha</li>
+                </ul>
+            </div>
+            
+            <div class="destaque-secao">
+                <h3>Festa Litúrgicas</h3>
+                <ul>
+                    <li>Imaculada Conceição (8/12)</li>
+                    <li>Nossa Senhora Aparecida (12/10)</li>
+                    <li>Assunção (15/8)</li>
+                    <li>Natividade de Maria (8/9)</li>
+                </ul>
+            </div>
+            
+            <div class="destaque-secao">
+                <h3>Santuários Marianos</h3>
+                <p>Locais de peregrinação dedicados a Maria:</p>
+                <ul>
+                    <li>Aparecida (Brasil)</li>
+                    <li>Lourdes (França)</li>
+                    <li>Fátima (Portugal)</li>
+                    <li>Guadalupe (México)</li>
+                </ul>
+            </div>
+            
+            <blockquote>
+                <p>"A Maria nada é impossível, pois Ela obteve do seu Filho tudo o que pede." (Santo Afonso de Ligório)</p>
+            </blockquote>
+        </div>
+        <div class="leia-mais">Leia mais</div>
+    </section>
+</main>
+
+<script src="/static/js/jesus.js"></script>
 {% endblock %}
