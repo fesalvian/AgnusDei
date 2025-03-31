@@ -22,6 +22,11 @@ body::before {
     z-index: -1;
 }
 
+.introducao{
+    display: flex;
+    flex-direction: column;
+}
+
 /* Títulos temáticos */
 h1, h2, h3 {
     color: var(--vermelho-sangue);
@@ -196,7 +201,7 @@ h3 {
 }
 
 .secao.expandida .conteudo-texto {
-    max-height: 4000px; /* Valor suficiente para o conteúdo completo */
+    max-height: 8000px; /* Valor suficiente para o conteúdo completo */
 }
 
 .secao.expandida .conteudo-texto::after {
