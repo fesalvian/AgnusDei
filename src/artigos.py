@@ -1,129 +1,103 @@
-
-from flask import Flask, jsonify, request
-from database import get_connection, get_cached_data, set_cache_data
-import json
-from datetime import datetime
+from flask import jsonify, request
+from src.database import get_connection, get_cached_data, set_cache_data
+import html
+from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/api/artigos', methods=['GET'])
-def get_artigos():
-    categoria = request.args.get('categoria', 'todos')
-    
-    # Verifica cache primeiro
-    cache_key = f'artigos_{categoria}'
-    cached_data = get_cached_data(cache_key)
-    if cached_data:
-        return jsonify(cached_data)
-    
-    # Se não tem no cache, busca no MySQL
-    conn = None
+def create_articles_blueprint():
+    from flask import Blueprint
+    bp = Blueprint('articles', __name__)
+
+    @bp.route('/api/artigos', methods=['GET'])
+    def get_artigos():
+        return jsonify({'message': 'Endpoint de artigos'})
+
+    @bp.route('/api/artigo/<string:slug>', methods=['GET'])
+    def get_artigo_completo(slug):
+        return jsonify({'message': f'Endpoint do artigo com slug {slug}'})
+
+    return bp
+
+def configure_artigos_routes(app):
+    @app.route('/api/artigos', methods=['GET'])
+    def get_artigos():
+        try:
+            categoria = request.args.get('categoria', 'todos')
+            cache_key = f'artigos_{categoria}'
+            
+            if cached := get_cached_data(cache_key):
+                return jsonify(cached)
+            
+            with get_connection() as conn:
+                cursor = conn.cursor(dictionary=True)
+                
+                query = """
+                    SELECT 
+                        id, titulo, resumo, categoria, 
+                        imagem_capa, data_postagem, 
+                        tempo_estimado_leitura,conteudo, slug
+                    FROM artigos
+                    WHERE status = 'publicado'
+                """
+                params = []
+                
+                if categoria != 'todos':
+                    query += " AND categoria = %s"
+                    params.append(categoria)
+                
+                query += " ORDER BY data_postagem DESC"
+                
+                cursor.execute(query, params)
+                artigos = cursor.fetchall()
+                
+                # Processamento seguro
+                processed = []
+                for artigo in artigos:
+                    processed.append({
+                        'id': artigo['id'],
+                        'titulo': html.escape(artigo['titulo']) if artigo['titulo'] else '',
+                        'resumo': html.escape(artigo['resumo']) if artigo['resumo'] else '',
+                        'categoria': artigo['categoria'],
+                        'imagem_capa': artigo['imagem_capa'] or '',
+                        'data_postagem': artigo['data_postagem'].isoformat() if artigo['data_postagem'] else None,
+                        'tempo_estimado_leitura': artigo['tempo_estimado_leitura'],
+                        'conteudo': artigo['conteudo'] or 'Erro ao carregar conteúdo',
+                        'slug': artigo['slug']
+                    })
+                
+                set_cache_data(cache_key, processed)
+                return jsonify(processed)
+            
+        except Exception as e:
+            app.logger.error(f"ERRO: {str(e)}")
+            return jsonify({
+                'error': 'Erro interno',
+                'details': str(e)
+            }), 500
+        
+@app.route('/api/artigo/<string:slug>', methods=['GET'])
+def get_artigo_completo(slug):
     try:
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-        
-        # Query base
-        query = """
-            SELECT a.id, a.titulo, a.resumo, a.categoria, a.imagem_capa, 
-                a.data_postagem, a.tempo_estimado_leitura, a.slug
-            FROM artigos a
-            WHERE a.status = 'publicado'
-        """
-        
-        # Adiciona filtro de categoria se necessário
-        params = ()
-        if categoria != 'todos':
-            query += " AND a.categoria = %s"
-            params = (categoria,)
-        
-        query += " ORDER BY a.data_postagem DESC"
-        
-        cursor.execute(query, params)
-        artigos = cursor.fetchall()
-        
-        # Formata os dados para resposta
-        result = []
-        for artigo in artigos:
-            result.append({
-                'id': artigo['id'],
+        with get_connection() as conn:
+            cursor = conn.cursor(dictionary=True)
+            
+            cursor.execute("""
+                SELECT titulo, conteudo, imagem_capa 
+                FROM artigos 
+                WHERE slug = %s AND status = 'publicado'
+            """, (slug,))
+            
+            artigo = cursor.fetchone()
+            if not artigo:
+                return jsonify({'error': 'Artigo não encontrado'}), 404
+            
+            return jsonify({
                 'titulo': artigo['titulo'],
-                'resumo': artigo['resumo'],
-                'categoria': artigo['categoria'],
-                'imagem_capa': artigo['imagem_capa'],
-                'data_postagem': artigo['data_postagem'].strftime('%Y-%m-%d') if artigo['data_postagem'] else None,
-                'tempo_estimado_leitura': artigo['tempo_estimado_leitura'],
-                'slug': artigo['slug']
+                'conteudo': artigo['conteudo'],
+                'imagem_capa': artigo['imagem_capa']
             })
-        
-        # Armazena no cache
-        set_cache_data(cache_key, result)
-        
-        return jsonify(result)
-        
+            
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    finally:
-        if conn:
-            conn.close()
-
-@app.route('/api/artigo/<int:artigo_id>', methods=['GET'])
-def get_artigo_completo(artigo_id):
-    # Verifica cache primeiro
-    cache_key = f'artigo_{artigo_id}'
-    cached_data = get_cached_data(cache_key)
-    if cached_data:
-        return jsonify(cached_data)
-    
-    # Se não tem no cache, busca no MySQL
-    conn = None
-    try:
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-        
-        # Busca o artigo principal
-        cursor.execute("""
-            SELECT a.id, a.titulo, a.categoria, a.imagem_capa, a.data_postagem, 
-                a.tempo_estimado_leitura, a.conteudo, a.slug
-            FROM artigos a
-            WHERE a.id = %s AND a.status = 'publicado'
-        """, (artigo_id,))
-        artigo = cursor.fetchone()
-        
-        if not artigo:
-            return jsonify({'error': 'Artigo não encontrado'}), 404
-        
-        # Busca as imagens do artigo
-        cursor.execute("""
-            SELECT caminho_imagem, legenda, ordem
-            FROM artigo_imagens
-            WHERE artigo_id = %s
-            ORDER BY ordem
-        """, (artigo_id,))
-        imagens = cursor.fetchall()
-        
-        # Formata os dados para resposta
-        result = {
-            'id': artigo['id'],
-            'titulo': artigo['titulo'],
-            'categoria': artigo['categoria'],
-            'imagem_capa': artigo['imagem_capa'],
-            'data_postagem': artigo['data_postagem'].strftime('%Y-%m-%d') if artigo['data_postagem'] else None,
-            'tempo_estimado_leitura': artigo['tempo_estimado_leitura'],
-            'conteudo': artigo['conteudo'],
-            'slug': artigo['slug'],
-            'imagens': imagens
-        }
-        
-        # Armazena no cache
-        set_cache_data(cache_key, result)
-        
-        return jsonify(result)
-        
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    finally:
-        if conn:
-            conn.close()
-
-if __name__ == '__main__':
-    app.run(debug=True)
+        app.logger.error(f"ERRO Artigo Completo: {str(e)}")
+        return jsonify({'error': str(e)}), 500            

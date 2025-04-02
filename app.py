@@ -3,6 +3,8 @@ from flask import Flask, render_template, jsonify
 from flask_cors import CORS
 from src.database import get_connection  # Importa de dentro da pasta src/
 from src.oracoes import oracoes_bp      # Importa o Blueprint de orações
+from src.artigos import configure_artigos_routes
+from src.artigos import create_articles_blueprint
 import requests
 import xml.etree.ElementTree as ET
 print("Importando src.contato...")
@@ -13,8 +15,13 @@ print("Função relatar_bug importada com sucesso.")
 app = Flask(__name__)
 CORS(app)
 
+articles_bp = create_articles_blueprint()
+app.register_blueprint(articles_bp, url_prefix='/artigos')
 # Registra o Blueprint de orações
 app.register_blueprint(oracoes_bp)
+
+# Configurar rotas de artigos
+configure_artigos_routes(app)
 
 # Rota para a página de personagens
 @app.route("/personagens", methods=["GET"])
@@ -95,6 +102,10 @@ def get_noticias():
         return jsonify({"error": f"Erro ao buscar notícias: {str(e)}"}), 500
     except ET.ParseError as e:
         return jsonify({"error": f"Erro ao processar XML: {str(e)}"}), 500
+
+@app.route('/artigo/<slug>')
+def artigo_detalhe(slug):
+    return render_template('artigo_completo.html')
 
 # Rotas principais
 @app.route("/")

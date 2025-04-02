@@ -3,6 +3,7 @@ import json
 from dotenv import load_dotenv
 import os
 from mysql.connector import pooling
+from redis.exceptions import ConnectionError
 
 # Carrega as variáveis do arquivo .env
 load_dotenv()
@@ -53,3 +54,21 @@ def set_cache_data(key, data, expiration=3600):
     """Armazena dados no Redis com tempo de expiração (1 hora)"""
     cache.setex(key, expiration, json.dumps(data))
     print(f"✅ Dados armazenados no cache para {key}")
+
+def get_cached_data(key):
+    """Busca dados no Redis com fallback silencioso"""
+    try:
+        if cached := cache.get(key):
+            print(f"✅ Cache encontrado para {key}")
+            return json.loads(cached)
+    except ConnectionError:
+        print("⚠️ Redis offline - Ignorando cache")
+    return None
+
+def set_cache_data(key, data, expiration=3600):
+    """Armazena dados no Redis com fallback silencioso"""
+    try:
+        cache.setex(key, expiration, json.dumps(data))
+        print(f"✅ Dados salvos no cache: {key}")
+    except ConnectionError:
+        print("⚠️ Redis offline - Não foi possível salvar no cache")    

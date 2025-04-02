@@ -14,24 +14,35 @@
         <button class="filtro-btn" data-categoria="testemunhos">Testemunhos</button>
     </div>
 
-    <!-- Área de Artigos (será populada dinamicamente) -->
     <div class="artigos-container" id="artigos-container">
-        <!-- Exemplo de como um artigo será estruturado via JavaScript -->
-        <article class="artigo-card" data-categoria="reflexoes">
-            <div class="artigo-imagem">
-                <img src="../static/img/jesusBarco.jpg" alt="Jesus no barco">
-            </div>
-            <div class="artigo-corpo">
-                <span class="artigo-categoria">Reflexões</span>
-                <h2 class="artigo-titulo">Título do Artigo</h2>
-                <p class="artigo-resumo">Resumo breve do artigo que será mostrado na lista...</p>
-                <div class="artigo-metadados">
-                    <span class="artigo-data">10/03/2023</span>
-                    <span class="artigo-tempo-leitura">5 min de leitura</span>
-                </div>
-                <a href="artigo-completo.html?id=1" class="artigo-link">Ler mais</a>
-            </div>
-        </article>
+        <div id="loading-animation" class="dot-wave">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
+        </div>
     </div>
+</div>  
+
+<!-- Modal Article -->
+<div id="article-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div id="modal-loading" class="dot-wave">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+      </div>
+      <div id="modal-content" style="display:none;">
+        <h2 id="modal-title"></h2>
+        <img id="modal-image" src="" alt="" class="modal-image">
+        <div id="modal-body" class="modal-body"></div>
+      </div>
+    </div>
+  </div>
 </main>
+
+<script src="{{ url_for('static', filename='js/artigos.js') }}"></script>
 {% endblock %}
