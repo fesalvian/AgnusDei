@@ -77,37 +77,6 @@ window.addEventListener('click', (e) => {
   }
 });
 
-// Função para carregar artigo completo
-async function loadFullArticle(slug) {
-    try {
-        modal.style.display = 'block';
-        modalContent.style.display = 'none';
-        modalLoading.style.display = 'flex';
-
-        const response = await fetch(`/api/artigo/${slug}`);
-        if (!response.ok) throw new Error('Artigo não encontrado');
-
-        const artigo = await response.json();
-
-        // Preencher modal
-        modalTitle.textContent = artigo.titulo;
-        modalImage.src = artigo.imagem_capa || '/static/img/default.jpg';
-        modalImage.alt = artigo.titulo;
-        modalImage.onerror = () => {
-            modalImage.src = '/static/img/default.jpg';
-        };
-        modalBody.innerHTML = artigo.conteudo; // Certifique-se de que o backend sanitiza o HTML
-
-        // Mostrar conteúdo com animação
-        modalLoading.style.display = 'none';
-        modalContent.style.display = 'block';
-
-    } catch (error) {
-        console.error('Erro:', error);
-        modalLoading.innerHTML = `<p class="error">Erro ao carregar artigo: ${error.message}</p>`;
-    }
-}
-
 // Modifique o event listener dos links
 document.addEventListener('click', (e) => {
   if (e.target.classList.contains('artigo-link')) {
@@ -157,7 +126,10 @@ document.querySelector('.close-modal').addEventListener('click', () => {
     }
   }
   
-  // Modifique o event listener dos links
+
+  
+
+  // Modifique o event listener dos links p abrir o modal
   document.addEventListener('click', (e) => {
     if (e.target.classList.contains('artigo-link')) {
       e.preventDefault();

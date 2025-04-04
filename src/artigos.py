@@ -1,26 +1,11 @@
-from flask import jsonify, request
+from flask import jsonify, request, Blueprint
 from src.database import get_connection, get_cached_data, set_cache_data
 import html
-from flask import Flask
-
-app = Flask(__name__)
 
 def create_articles_blueprint():
-    from flask import Blueprint
     bp = Blueprint('articles', __name__)
 
-    @bp.route('/api/artigos', methods=['GET'])
-    def get_artigos():
-        return jsonify({'message': 'Endpoint de artigos'})
-
-    @bp.route('/api/artigo/<string:slug>', methods=['GET'])
-    def get_artigo_completo(slug):
-        return jsonify({'message': f'Endpoint do artigo com slug {slug}'})
-
-    return bp
-
-def configure_artigos_routes(app):
-    @app.route('/api/artigos', methods=['GET'])
+    @bp.route('/artigos', methods=['GET'])
     def get_artigos():
         try:
             categoria = request.args.get('categoria', 'todos')
@@ -51,7 +36,6 @@ def configure_artigos_routes(app):
                 cursor.execute(query, params)
                 artigos = cursor.fetchall()
                 
-                # Processamento seguro
                 processed = []
                 for artigo in artigos:
                     processed.append({
@@ -70,34 +54,35 @@ def configure_artigos_routes(app):
                 return jsonify(processed)
             
         except Exception as e:
-            app.logger.error(f"ERRO: {str(e)}")
             return jsonify({
                 'error': 'Erro interno',
                 'details': str(e)
             }), 500
-        
-@app.route('/api/artigo/<string:slug>', methods=['GET'])
-def get_artigo_completo(slug):
-    try:
-        with get_connection() as conn:
-            cursor = conn.cursor(dictionary=True)
-            
-            cursor.execute("""
-                SELECT titulo, conteudo, imagem_capa 
-                FROM artigos 
-                WHERE slug = %s AND status = 'publicado'
-            """, (slug,))
-            
-            artigo = cursor.fetchone()
-            if not artigo:
-                return jsonify({'error': 'Artigo não encontrado'}), 404
-            
-            return jsonify({
-                'titulo': artigo['titulo'],
-                'conteudo': artigo['conteudo'],
-                'imagem_capa': artigo['imagem_capa']
-            })
-            
-    except Exception as e:
-        app.logger.error(f"ERRO Artigo Completo: {str(e)}")
-        return jsonify({'error': str(e)}), 500            
+
+    @bp.route('/artigo/<string:slug>', methods=['GET'])
+    def get_artigo_completo(slug):
+        print(f"Buscando artigo: {slug}")
+        try:
+            with get_connection() as conn:
+                cursor = conn.cursor(dictionary=True)
+                
+                cursor.execute("""
+                    SELECT titulo, conteudo, imagem_capa 
+                    FROM artigos 
+                    WHERE slug = %s AND status = 'publicado'
+                """, (slug,))
+                
+                artigo = cursor.fetchone()
+                if not artigo:
+                    return jsonify({'error': 'Artigo não encontrado'}), 404
+                
+                return jsonify({
+                    'titulo': artigo['titulo'],
+                    'conteudo': artigo['conteudo'],
+                    'imagem_capa': artigo['imagem_capa']
+                })
+                
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+
+    return bp
