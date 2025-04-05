@@ -234,7 +234,7 @@ body {
     
     .left-panel {
         position: fixed;
-        top: 140px;
+        top: 180px;
         left: -320px;
         height: 100vh;
         width: 280px;

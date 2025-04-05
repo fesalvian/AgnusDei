@@ -19,6 +19,10 @@ main {
     margin: 0 auto;
     flex:1;
 }
+.container{
+    max-width: 100vw;
+    width: 100%;
+}
 .navegacao {
     background-color: #8b0000;
     display: flex;
@@ -27,6 +31,7 @@ main {
     padding: 15px 0; /* Reduzi o padding inicial */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: fixed;
+    max-width: 100vw;
     width: 100%;
     height: 140px;
     top: 0;
@@ -222,57 +227,84 @@ img {
     }
 }
 
+/* Responsividade - Mobile */
 @media (max-width: 768px) {
     body {
-        padding-top: 120px; /* Reduzir o padding-top para telas menores */
+        padding-top: 100px;
     }
 
     .navegacao {
-        width: 100%;
-        box-sizing: border-box;
         flex-direction: column;
-        padding: 10px;
-        padding-bottom: 10px;
+        padding: 10px 0;
+        height: auto;
+        min-height: 100px;
+    }
+
+    .navegacao-logo {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .navegacao a img {
+        height: 80px;
+    }
+
+    .navegacao-menu {
+        width: 100%;
     }
 
     .navegacao ul {
         flex-direction: column;
-        align-items: center;
-        display: none; /* Oculta o menu por padrão */
+        display: none;
         width: 100%;
         padding: 0;
         margin: 0;
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: opacity 0.3s ease, max-height 0.3s ease;
     }
 
     .navegacao ul.active {
-        display: flex; /* Exibe o menu quando a classe active está presente */
-        margin-top: 20px;
+        display: flex;
+        opacity: 1;
+        max-height: 500px;
+        margin-top: 15px;
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+    }
+
+    .navegacao ul.active ~ .navegacao-logo a:not(.menu-toggle) {
+        display: none;
     }
 
     .navegacao ul li {
-        margin: 10px 0;
+        margin: 8px 0;
         width: 100%;
         text-align: center;
     }
 
     .navegacao ul li a {
         font-size: 16px;
-        padding: 8px 12px;
-    }
-
-    nav a img {
-        height: 100px; /* Reduzir o tamanho da imagem do logo */
+        padding: 12px;
+        display: block;
     }
 
     .menu-toggle {
-        display: block; /* Exibe o botão de menu */
+        display: block;
         background: none;
         border: none;
         color: white;
-        font-size: 24px;
+        font-size: 28px;
         cursor: pointer;
-    }
-    .footer-content p{
         padding: 10px;
+    }
+
+    .menu-toggle:focus {
+        outline: none;
+    }
+
+    .footer-content{
+    margin: 10px;
     }
 }
