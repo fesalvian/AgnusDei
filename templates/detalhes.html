@@ -9,10 +9,10 @@
     <div class="texto">
         <h1>{{ personagem.nome }}</h1>
         <h2>{{ personagem.subtitulo }}</h2>
+        <div class="imagem">
+            <img src="{{ personagem.img }}" alt="{{ personagem.nome }}">
+        </div>
         <p>{{ personagem.texto }}</p>
-    </div>
-    <div class="imagem">
-        <img src="{{ personagem.img }}" alt="{{ personagem.nome }}">
     </div>
 </div>
 

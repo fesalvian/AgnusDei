@@ -523,6 +523,9 @@ blockquote {
 }
 
 @media (max-width: 768px) {
+    main{
+        width: 100%;
+    }
     .menu-interno {
         top: 70px;
         padding: 12px 0;
