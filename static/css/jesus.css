@@ -201,7 +201,7 @@ h3 {
 }
 
 .secao.expandida .conteudo-texto {
-    max-height: 8000px; /* Valor suficiente para o conteúdo completo */
+    max-height: 12000px; /* Valor suficiente para o conteúdo completo */
 }
 
 .secao.expandida .conteudo-texto::after {
@@ -375,6 +375,11 @@ blockquote {
     max-width: 700px;
     border-radius: 10px;
     position: relative;
+    max-height: 90vh; /* Limita a altura do modal */
+    overflow-y: auto; /* Permite scroll vertical */
+}
+body.modal-aberto {
+    overflow: hidden; /* Evita scroll no body */
 }
 
 .fechar-modal {
@@ -525,6 +530,21 @@ blockquote {
 @media (max-width: 768px) {
     main{
         width: 100%;
+        padding: 0;
+    }
+    .conteudo-jesus{
+        padding: 10px;
+    }
+    .modal-conteudo {
+        width: 90%; 
+        padding: 20px; 
+    }
+    .secao{
+        padding: 20px;
+    }
+    .img-destaque{
+        max-width: 100%;
+        height: auto;
     }
     .menu-interno {
         top: 70px;

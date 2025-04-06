@@ -56,7 +56,8 @@ main {
     }
 
     .card img {
-        height: 150px; /* Reduz a altura da imagem */
+        height: 300px; /* Reduz a altura da imagem */
+        object-position: top;
     }
 
     .card-content h3 {

@@ -8,6 +8,7 @@ main {
 
 .detalhes-container {
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 20px;
     padding: 20px ; /* Espaçamento apenas no topo e na base */
@@ -19,21 +20,28 @@ main {
 
 .detalhes-container p{
     font-size: large;
+    order: 1;
 }
 
 .texto {
-    flex: 1; /* Ocupa o espaço disponível */
+    flex: 1; 
+
 }
 
 .imagem {
-    max-width: 600px; /* Define o tamanho máximo da imagem */
-    width: 501px;
+    max-width: 600px; 
+
+    border-radius: 10px; 
+    order: 2;
+}
+
+.imagem img{
+    width: 600px;
     height: auto;
-    /*height: auto;*/ /* Mantém a proporção da imagem */
-    border-radius: 10px; /* Borda arredondada opcional */
 }
 
 @media (max-width: 768px) {
+
     .detalhes-container {
         display: flex;
         flex-direction: column;
@@ -42,5 +50,9 @@ main {
     .detalhes-container .imagem{
         width: 100%;
         height: auto;
+        order: 1;
+    }
+    .texto {
+        order: 2;
     }
 }
