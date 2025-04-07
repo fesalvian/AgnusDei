@@ -7,6 +7,7 @@ from src.artigos import  create_articles_blueprint
 import requests
 import xml.etree.ElementTree as ET
 from src.contato import relatar_bug
+from dotenv import load_dotenv
 
 
 app = Flask(__name__)
@@ -134,6 +135,8 @@ def contato():
     return render_template("contato.html")
 
 # Registra a rota /api/relatar-bug
+load_dotenv()
+
 app.add_url_rule('/api/relatar-bug', view_func=relatar_bug, methods=['POST'])
 
             
