@@ -22,7 +22,7 @@ app.register_blueprint(oracoes_bp)
 # Rota para a página de personagens
 @app.route("/personagens", methods=["GET"])
 def personagens():
-    return jsonify({"mensagem": "Dados do servidor"})
+    return render_template("cards.html")
 
 # Rota para buscar todos os personagens (API)
 @app.route("/api/personagens", methods=["GET"])
@@ -108,31 +108,32 @@ def artigo_detalhe(slug):
 # Rotas principais
 @app.route("/")
 def index():
-    return jsonify({"mensagem": "Dados do servidor"})
+    return render_template("index.html")
 
 @app.route("/home")
 def home():
-    return jsonify({"mensagem": "Dados do servidor"})
+    return render_template("home.html")
 
 @app.route("/jesus")
 def jesus():
-    return jsonify({"mensagem": "Dados do servidor"})
+    return render_template("jesus.html")
 
 @app.route("/maria")
 def maria():
-    return jsonify({"mensagem": "Dados do servidor"})
+    return render_template("maria.html")
 
 @app.route("/oracoes")
 def oracoes():
-    return jsonify({"mensagem": "Dados do servidor"})
+    return render_template("oracoes.html")
 
 @app.route("/artigo")
 def artigo():
-    return jsonify({"mensagem": "Dados do servidor"})
+    return render_template("artigo.html")
 
 @app.route("/contato")
 def contato():
-    return jsonify({"mensagem": "Dados do servidor"})
+    return render_template("contato.html")
+
 
 # Registra a rota /api/relatar-bug
 load_dotenv()
