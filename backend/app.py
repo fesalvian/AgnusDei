@@ -8,6 +8,7 @@ import requests
 import xml.etree.ElementTree as ET
 from src.contato import relatar_bug
 from dotenv import load_dotenv
+import os
 
 
 app = Flask(__name__)
@@ -142,4 +143,5 @@ app.add_url_rule('/api/relatar-bug', view_func=relatar_bug, methods=['POST'])
 
             
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)

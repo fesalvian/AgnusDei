@@ -1,2 +1,6 @@
 [settings]
 appDir = "backend"
+
+[start]
+cmd = "gunicorn app:app"
+

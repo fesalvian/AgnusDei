@@ -4,4 +4,5 @@ requests
 python-dotenv==1.0.0
 redis
 flask-cors
+gunicorn
 
