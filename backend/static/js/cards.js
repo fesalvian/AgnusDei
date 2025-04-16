@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     // URL da API
-    const apiUrl = "http://127.0.0.1:5000/api/personagens";
+    const apiUrl = "/api/personagens";
 
     // Container onde os cards serão exibidos
     const container = document.getElementById("cards-grid");
