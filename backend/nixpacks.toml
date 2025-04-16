@@ -2,6 +2,6 @@
 appDir = "backend"
 
 [start]
-cmd = "gunicorn app:app --chdir backend"
+cmd = "gunicorn app:app"
 
 
