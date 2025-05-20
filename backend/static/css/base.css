@@ -40,6 +40,45 @@ main {
     animation: brilho 3s infinite ease-in-out;
     transition: all 0.3s ease-in-out; /* Adiciona transição suave */
 }
+
+/* Estilização da seção introdutória */
+.introducao-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.introducao-texto {
+  flex: 1 1 400px;
+  max-width: 600px;
+  text-align: left;
+}
+
+.imagem-papa {
+  flex: 1 1 300px;
+  max-width: 800px;
+  text-align: center;
+}
+
+.imagem-papa img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.legenda-papa {
+  font-size: 0.75rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+
 .left-panel {
     z-index: 900;
   }
@@ -153,7 +192,6 @@ footer {
 
 /* Títulos */
 h1, h2, h3 {
-    color: #8b0000;
     font-family: 'Palatino Linotype', 'Book Antiqua', serif;
 }
 

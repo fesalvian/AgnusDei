@@ -123,7 +123,7 @@ body {
 .artigo-link {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background-color: #2c3e50;
+    background-color: #8b0000;
     color: white;
     text-decoration: none;
     border-radius: 4px;
@@ -131,7 +131,7 @@ body {
 }
 
 .artigo-link:hover {
-    background-color: #1a252f;
+    background-color: #d10d0d;
 }
 
 /* Modal Styles */
@@ -158,6 +158,14 @@ body {
     max-height: 80vh;
     overflow-y: auto;
     position: relative;
+  }
+
+  h1, h2{
+    color: #7a1212;
+  }
+
+  .artigo-link a {
+    background-color: #7a1212;
   }
   
   .close-modal {

@@ -18,8 +18,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('../img/biblia.jpg') no-repeat center/cover; /* A imagem de fundo */
-    filter: blur(8px); /* Aplica o desfoque */
+    background: url('../img/popefuneral.jpg') no-repeat center/cover; /* A imagem de fundo */
+    filter: blur(2px); /* Aplica o desfoque */
 
     z-index: 0; /* Coloca o pseudo-elemento atrás do conteúdo */
 }
