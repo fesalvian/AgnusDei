@@ -1,12 +1,14 @@
 from flask import jsonify, request, Blueprint
 from src.database import get_connection, get_cached_data, set_cache_data
 import html
+from src.prewarm import prewarm_artigos
 
 def create_articles_blueprint():
     bp = Blueprint('articles', __name__)
 
     @bp.route('/artigos', methods=['GET'])
     def get_artigos():
+        prewarm_artigos()
         try:
             categoria = request.args.get('categoria', 'todos')
             cache_key = f'artigos_{categoria}'

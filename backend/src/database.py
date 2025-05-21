@@ -15,13 +15,11 @@ DB_NAME = os.getenv("DB_NAME")
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 
-# Configuração do Redis (Cache)
-REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
-REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
-REDIS_DB = int(os.getenv("REDIS_DB", 0))
-
-# Inicializa a conexão com Redis
-cache = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=True)
+# Usa a URL única
+cache = redis.StrictRedis.from_url(
+    os.getenv("REDIS_URL"), 
+    decode_responses=True
+)
 
 # Criando um pool de conexões com MySQL
 pool = pooling.MySQLConnectionPool(
@@ -71,4 +69,5 @@ def set_cache_data(key, data, expiration=3600):
         cache.setex(key, expiration, json.dumps(data))
         print(f"✅ Dados salvos no cache: {key}")
     except ConnectionError:
-        print("⚠️ Redis offline - Não foi possível salvar no cache")    
+        print("⚠️ Redis offline - Não foi possível salvar no cache")
+   

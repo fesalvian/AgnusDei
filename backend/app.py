@@ -9,6 +9,9 @@ import xml.etree.ElementTree as ET
 from src.contato import relatar_bug
 from dotenv import load_dotenv
 import os
+import json
+import redis
+from src.prewarm import prewarm_personagens
 
 
 app = Flask(__name__)
@@ -20,27 +23,48 @@ app.register_blueprint(articles_bp, url_prefix='/api')
 app.register_blueprint(oracoes_bp)
 
 
+load_dotenv() # Carrega as variáveis de ambiente do arquivo .env
+# Configuração do Redis
+cache = redis.StrictRedis.from_url(os.getenv("REDIS_URL"), decode_responses=True)
+
+
 # Rota para a página de personagens
 @app.route("/personagens", methods=["GET"])
 def personagens():
+    prewarm_personagens()
     return render_template("cards.html")
 
 # Rota para buscar todos os personagens (API)
 @app.route("/api/personagens", methods=["GET"])
 def get_personagens():
-    """Retorna todos os personagens do banco de dados."""
+    """Retorna todos os personagens do banco de dados com cache."""
     try:
+        # 1. Tenta pegar do cache
+        cached_data = cache.get("personagens")
+
+        if cached_data:
+            print("🔁 Cache HIT: personagens")
+            personagens = json.loads(cached_data)
+            return jsonify(personagens)
+
+        print("🚀 Cache MISS: buscando no MySQL")
+
+        # 2. Se não tiver no cache, busca no banco
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-        
+
         query = "SELECT id, nome, subtitulo, texto, img FROM mais_sobre;"
         cursor.execute(query)
         personagens = cursor.fetchall()
 
         cursor.close()
         conn.close()
-        
-        return jsonify(personagens)  
+
+        # 3. Salva no cache por 5 minutos (300 segundos)
+        cache.setex("personagens", 300, json.dumps(personagens))
+
+        return jsonify(personagens)
+
     except Exception as e:
         print(f"Erro ao buscar personagens: {e}")
         return jsonify({"error": "Erro ao buscar personagens"}), 500
@@ -103,8 +127,6 @@ def get_noticias():
 @app.route('/artigo/<slug>')
 def artigo_detalhe(slug):
     return jsonify({"mensagem": "Dados do servidor"})
-
-
 
 # Rotas principais
 @app.route("/")
