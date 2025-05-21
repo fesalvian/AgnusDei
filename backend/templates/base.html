@@ -41,11 +41,72 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Agnus Dei. Todos os direitos reservados. Criado com amor a Deus por: Felipe Salviano</p>
-        </div>
-    </footer>
+<footer>
+  <div class="footer-content">
+    
+    <div class="footer-left">
+      <h4>Sobre o Agnus Dei</h4>
+      <p>&copy; 2025 Agnus Dei. Todos os direitos reservados.<br>
+      Criado com amor a Deus por: Felipe Salviano</p>
+      <p><em>"Tudo posso naquele que me fortalece" — Filipenses 4:13</em></p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Navegação</h4>
+      <ul>
+        <li><a href="/home">Página Principal</a></li>
+        <li><a href="/personagens">Mais Sobre</a></li>
+        <li><a href="/oracoes">Orações</a></li>
+        <li><a href="/artigo">Artigos</a></li>
+        <li><a href="/contato">Contato</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-referencias">
+      <h4>Referências Católicas</h4>
+      <ul>
+        <li><a href="https://www.vatican.va/" target="_blank">Vaticano</a></li>
+        <li><a href="https://www.cnbb.org.br/" target="_blank">CNBB</a></li>
+        <li><a href="https://www.acidigital.com/" target="_blank">ACI Digital</a></li>
+        <li><a href="https://www.catholicnewsagency.com/" target="_blank">Catholic News Agency</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-social">
+      <h4>Siga-me SalvianDev</h4>
+      <ul>
+        <li><a href="https://www.instagram.com/" target="_blank">Instagram</a></li>
+        <li><a href="https://www.facebook.com/" target="_blank">Facebook</a></li>
+        <li><a href="https://www.youtube.com/" target="_blank">YouTube</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contato</h4>
+      <p>Email: felipesalviano00@hotmail.com</p>
+      <p>Telefone: (44) 99118-8029</p>
+    </div>
+
+    <div class="footer-doacao">
+        <div class="botaoDoacao">
+  <h4>Contribua</h4>
+  <p>Ajude-nos a espalhar a Palavra de Deus, todo dinheiro doado será usado para manter este projeto no ar:</p>
+  
+  <a href="https://www.paypal.com/donate" target="_blank" class="botao-doacao">Doe Agora</a>
+  </div>
+  <div class="qrCode">
+  <div class="qr-code">
+    <img src="../static/img/qrCodeDoacao.png" alt="QR Code para doação">
+    <p>Escaneie o QR Code para doar via Pix</p>
+  </div>
+  </div>
+</div>
+
+
+  </div>
+</footer>
+
+
     <script src="{{ url_for('static', filename='js/base.js') }}"></script>
 </body>
 </html>

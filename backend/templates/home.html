@@ -5,6 +5,7 @@
 {% block content %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/noticias.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/videos.css') }}">
 
 <section class="hero">
     <div class="hero-content">
@@ -32,7 +33,18 @@
   </div>
 </section>
 
+<section class="video-destaque">
+    <h2 id="video-titulo"></h2>
+  <div class="conteudo-div">
+    <p id="video-descricao"></p>
+    <div id="video-container"></div>
+  </div>
+</section>
 
+<section id="noticias-catolicas">
+    <h2 id="noticiaTitulo" style="text-align: center;">Últimas Notícias do mundo Católico</h2>
+    <div id="feed-noticias" class="noticias-container"></div>
+</section>
 
 <section class="destaques">
     <div class="destaque-card">
@@ -59,13 +71,8 @@
     <!-- O conteúdo do calendário será carregado aqui -->
 </section>
 
-<section id="noticias-catolicas">
-    <h2 id="noticiaTitulo" style="text-align: center;">Últimas Notícias do mundo Católico</h2>
-    <div id="feed-noticias" class="noticias-container"></div>
-</section>
-
 <section class="depoimentos">
-    <h2>Lembre se sempre</h2>
+    <h2>Lembre-se sempre</h2>
     <blockquote>
         "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito,
         para que todo aquele que nele crê não pereça, mas tenha a vida eterna." - João 3, 16
@@ -74,5 +81,6 @@
 
 <script src="{{ url_for('static', filename='js/calendario.js') }}"></script>
 <script src="{{ url_for('static', filename='js/noticias.js') }}"></script>
+<script src="{{ url_for('static', filename='js/video.js') }}"></script>
 
 {% endblock %}

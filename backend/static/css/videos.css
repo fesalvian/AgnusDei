@@ -1,0 +1,73 @@
+.video-destaque {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  background-color: #fff8f0;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin: 40px 0;
+}
+
+.video-destaque h2 {
+  font-size: 28px;
+  color: #8b0000;
+  margin-bottom: 20px;
+}
+
+.video-destaque p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  
+    font-size: 16px;
+    color: #fff8f0;
+    line-height: 1.6;
+    max-width: 400px;
+    text-align: center;
+    background-color: #8b0000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 24px;
+}
+
+#video-container iframe {
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  max-width: 100%;
+  width: 854px;
+  height: 480px;
+}
+
+.conteudo-div{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    gap: 50px;
+    align-self: center;
+}
+
+/* Responsivo: empilha o texto e o vídeo no mobile */
+@media (max-width: 768px) {
+  .video-destaque {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .video-destaque p {
+    max-width: 100%;
+  }
+
+  #video-container iframe {
+    width: 100%;
+    height: auto;
+  }
+
+  .conteudo-div{
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+}

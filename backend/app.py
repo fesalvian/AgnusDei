@@ -128,6 +128,28 @@ def get_noticias():
 def artigo_detalhe(slug):
     return jsonify({"mensagem": "Dados do servidor"})
 
+@app.route("/api/video-destaque", methods=["GET"])
+def get_video_destaque():
+    conn = get_connection()
+    if conn:
+        try:
+            cursor = conn.cursor(dictionary=True)
+            query = "SELECT titulo, descricao, url_video FROM videos_destacados WHERE ativo = 1 ORDER BY id DESC LIMIT 1;"
+            cursor.execute(query)
+            video = cursor.fetchone()
+            cursor.close()
+            conn.close()
+
+            if video:
+                return jsonify(video)
+            else:
+                return jsonify({"error": "Nenhum vídeo encontrado"}), 404
+        except Exception as e:
+            print(f"Erro ao buscar vídeo: {e}")
+            return jsonify({"error": "Erro ao buscar vídeo"}), 500
+    return jsonify({"error": "Erro de conexão com o banco de dados"}), 500
+
+
 # Rotas principais
 @app.route("/")
 def index():
