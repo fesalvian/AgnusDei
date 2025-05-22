@@ -2,6 +2,7 @@
 from flask import Flask, render_template, jsonify
 from flask_cors import CORS
 from src.database import get_connection  # Importa de dentro da pasta src/
+from src.database import get_cached_data, set_cache_data  # Importa as funções de cache
 from src.oracoes import oracoes_bp      # Importa o Blueprint de orações
 from src.artigos import  create_articles_blueprint
 import requests
@@ -11,11 +12,17 @@ from dotenv import load_dotenv
 import os
 import json
 import redis
-from src.prewarm import prewarm_personagens
+from src.prewarm import prewarm_personagens, prewarm_video_destaque, prewarm_personagens_individuais, prewarm_oracoes_individuais, prewarm_artigos_individuais
 
 
 app = Flask(__name__)
 CORS(app)
+
+#Carergamentos de cache automaticos
+prewarm_video_destaque()
+prewarm_personagens_individuais()
+prewarm_oracoes_individuais()
+prewarm_oracoes_individuais()
 
 articles_bp = create_articles_blueprint()
 app.register_blueprint(articles_bp, url_prefix='/api')
@@ -73,7 +80,18 @@ def get_personagens():
 # Rota para buscar um personagem específico (API)
 @app.route("/personagem/<int:id>", methods=["GET"])
 def personagem(id):
-    """Retorna os detalhes de um personagem específico."""
+    """Retorna os detalhes de um personagem específico, com cache."""
+    from src.database import get_cached_data, set_cache_data
+
+    cache_key = f"personagem_{id}"
+    personagem = get_cached_data(cache_key)
+
+    if personagem:
+        print(f"✅ Cache HIT: {cache_key}")
+        return render_template("detalhes.html", personagem=personagem)
+
+    print(f"🚀 Cache MISS: {cache_key}, buscando no banco...")
+
     conn = get_connection()
     if conn:
         try:
@@ -85,6 +103,7 @@ def personagem(id):
             conn.close()
 
             if personagem:
+                set_cache_data(cache_key, personagem)
                 return render_template("detalhes.html", personagem=personagem)
             else:
                 return "Personagem não encontrado", 404
@@ -92,6 +111,7 @@ def personagem(id):
             print(f"Erro ao buscar personagem: {e}")
             return "Erro ao buscar personagem", 500
     return "Erro de conexão com o banco de dados", 500
+
 
 #rota para buscar noticias
 RSS_URL = "https://news.google.com/rss/search?q=notícias+católicas&hl=pt-BR&gl=BR&ceid=BR:pt-419"
@@ -130,17 +150,30 @@ def artigo_detalhe(slug):
 
 @app.route("/api/video-destaque", methods=["GET"])
 def get_video_destaque():
+    # Primeiro tenta buscar no cache
+    cached_video = get_cached_data('video_destaque')
+    if cached_video:
+        return jsonify(cached_video)
+
+    # Se não tiver no cache, busca no banco e atualiza o cache
     conn = get_connection()
     if conn:
         try:
             cursor = conn.cursor(dictionary=True)
-            query = "SELECT titulo, descricao, url_video FROM videos_destacados WHERE ativo = 1 ORDER BY id DESC LIMIT 1;"
+            query = """
+                SELECT titulo, descricao, url_video 
+                FROM videos_destacados 
+                WHERE ativo = 1 
+                ORDER BY id DESC 
+                LIMIT 1;
+            """
             cursor.execute(query)
             video = cursor.fetchone()
             cursor.close()
             conn.close()
 
             if video:
+                set_cache_data('video_destaque', video)
                 return jsonify(video)
             else:
                 return jsonify({"error": "Nenhum vídeo encontrado"}), 404
@@ -148,6 +181,7 @@ def get_video_destaque():
             print(f"Erro ao buscar vídeo: {e}")
             return jsonify({"error": "Erro ao buscar vídeo"}), 500
     return jsonify({"error": "Erro de conexão com o banco de dados"}), 500
+
 
 
 # Rotas principais

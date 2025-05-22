@@ -63,28 +63,33 @@ def create_articles_blueprint():
 
     @bp.route('/artigo/<string:slug>', methods=['GET'])
     def get_artigo_completo(slug):
-        print(f"Buscando artigo: {slug}")
+        from src.database import get_cached_data, set_cache_data
+
+        cache_key = f"artigo_{slug}"
+        cached_artigo = get_cached_data(cache_key)
+        if cached_artigo:
+            print(f"✅ Cache HIT: {cache_key}")
+            return jsonify(cached_artigo)
+
+        print(f"🚀 Cache MISS: {cache_key}, buscando no banco...")
+
         try:
             with get_connection() as conn:
                 cursor = conn.cursor(dictionary=True)
-                
                 cursor.execute("""
                     SELECT titulo, conteudo, imagem_capa 
                     FROM artigos 
                     WHERE slug = %s AND status = 'publicado'
                 """, (slug,))
-                
                 artigo = cursor.fetchone()
-                if not artigo:
+
+                if artigo:
+                    set_cache_data(cache_key, artigo)
+                    return jsonify(artigo)
+                else:
                     return jsonify({'error': 'Artigo não encontrado'}), 404
-                
-                return jsonify({
-                    'titulo': artigo['titulo'],
-                    'conteudo': artigo['conteudo'],
-                    'imagem_capa': artigo['imagem_capa']
-                })
-                
         except Exception as e:
             return jsonify({'error': str(e)}), 500
+
 
     return bp

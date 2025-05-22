@@ -166,6 +166,19 @@ function showErrorInLists(lists) {
     Object.values(lists).forEach(list => list.innerHTML = errorMsg);
 }
 
+function ajustarInstrucao() {
+    const instrucao = document.querySelector('.instrucaoText');
+    if (window.innerWidth > 768) {
+        instrucao.innerText = '⬅ Clique no menu de orações ao lado e escolha uma ';
+    } else {
+        instrucao.innerText = 'Clique no menu de orações acima e escolha uma ⬆';
+    }
+}
+
+window.addEventListener('load', ajustarInstrucao);
+window.addEventListener('resize', ajustarInstrucao);
+
+
 // ==============================================
 // FUNÇÕES DE EXIBIÇÃO DE ORAÇÕES
 // ==============================================

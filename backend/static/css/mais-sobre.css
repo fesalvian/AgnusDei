@@ -3,7 +3,6 @@ main {
     padding: 20px;
     font-family: Georgia, serif;
     color: #3D405B;
-    width: 100vw;
 }
 
 #cards-grid {
@@ -41,6 +40,10 @@ main {
 .card-content h3 {
     margin: 0;
     font-size: 1.5rem;
+    color: #8b0000; 
+    font-family: 'Playfair Display', serif; 
+    font-weight: 700; 
+    margin-bottom: 10px; 
 }
 
 .card-content p {

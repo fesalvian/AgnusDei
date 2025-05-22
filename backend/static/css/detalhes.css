@@ -21,11 +21,20 @@ main {
 .detalhes-container p{
     font-size: large;
     order: 1;
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+}
+
+h1, h2 {
+    color: #8b0000;
 }
 
 .texto {
     flex: 1; 
-
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .imagem {
