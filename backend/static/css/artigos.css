@@ -199,6 +199,14 @@ body {
         max-height: 90vh;
         height: 90vh;
     }
+    .artigo-link {
+        display: flex;
+        justify-content: center;
+        max-width: 250px;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+    }
 }
 
 @media (max-width: 480px) {

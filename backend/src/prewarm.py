@@ -173,5 +173,9 @@ def prewarm_video_destaque():
 
 if __name__ == "__main__":
     prewarm_personagens()
+    prewarm_personagens_individuais()
     prewarm_artigos()
+    prewarm_artigos_individuais()
     prewarm_oracoes()
+    prewarm_oracoes_individuais()
+    prewarm_video_destaque()

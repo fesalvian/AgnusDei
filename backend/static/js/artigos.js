@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function formatCategoria(categoria) {
         const categorias = {
-            'reflexoes': 'Reflexões',
+            'tradicoes': 'Tradições',
             'estudos': 'Estudos Bíblicos',
-            'testemunhos': 'Testemunhos'
+            'reflexoes': 'Reflexões'
         };
         return categorias[categoria] || categoria;
     }
