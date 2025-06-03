@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{{ artigo.titulo }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/autora.css">
+  <h1>{{ artigo.titulo }}</h1>
+  <p><em>Leitura estimada: {{ artigo.tempo_estimado_leitura }} min</em></p>
+  <hr>
+
+  <div>
+    {{ artigo.conteudo | safe }}
+  </div>
+
+  <hr>
+  <a href="/autora/fsp">← Voltar para os artigos da autora</a>
+{% endblock %}
