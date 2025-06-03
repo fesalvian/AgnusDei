@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}FSP{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/autora.css">
+<h1>Artigos da Ir. Adilse Xavier, FSP</h1>
+
+  {% for artigo in artigos %}
+    <div class="artigo">
+      <h2>{{ artigo.titulo }}</h2>
+      <p>{{ artigo.resumo }}</p>
+      <a href="/artigo-autora/{{ artigo.slug }}">Leia mais</a>
+    </div>
+    <hr>
+  {% endfor %}
+
+{% endblock %}

@@ -143,6 +143,49 @@ def get_noticias():
         return jsonify({"error": f"Erro ao buscar notícias: {str(e)}"}), 500
     except ET.ParseError as e:
         return jsonify({"error": f"Erro ao processar XML: {str(e)}"}), 500
+    
+# Rota para listar os artigos da autora
+@app.route('/autora/fsp')
+def artigos_autora_fsp():
+    conn = get_connection()
+    if conn is None:
+        return "Erro ao conectar com o banco de dados.", 500
+
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT titulo, resumo, slug 
+        FROM artigos_autora 
+        WHERE status = 'publicado' 
+        ORDER BY data_postagem DESC 
+        LIMIT 3
+    """)
+    artigos = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return render_template('FSP.html', artigos=artigos)
+
+
+# Rota para visualizar o artigo completo
+@app.route('/artigo-autora/<slug>')
+def artigo_autora_detalhe(slug):
+    conn = get_connection()
+    if conn is None:
+        return "Erro ao conectar com o banco de dados.", 500
+
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM artigos_autora WHERE slug = %s", (slug,))
+    artigo = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if not artigo:
+        return "Artigo não encontrado", 404
+
+    return render_template('artigo_autora.html', artigo=artigo)
+
+
+
 
 @app.route('/artigo/<slug>')
 def artigo_detalhe(slug):
